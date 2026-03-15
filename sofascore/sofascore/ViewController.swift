@@ -16,78 +16,67 @@ class ViewController: UIViewController {
     let matchView3 = MatchView()
     let matchView4 = MatchView()
     
+    let laLiga = League(
+        logo: UIImage(named: "LaLiga"),
+        name: "LaLiga",
+        country: "Spain"
+    )
+    
+    let match1 = Match(
+        matchStartTimestamp: 1773394200,
+        HTLogo: UIImage(named: "Manchester United"),
+        ATLogo: UIImage(named: "Barcelona"),
+        HTName: "Manchester United",
+        ATName: "Barcelona",
+        HTGoals: 1,
+        ATGoals: 2
+    )
+    
+    let match2 = Match(
+        matchStartTimestamp: 1773405000,
+        HTLogo: UIImage(named: "Manchester United"),
+        ATLogo: UIImage(named: "Barcelona"),
+        HTName: "Manchester United",
+        ATName: "Barcelona",
+        HTGoals: 0,
+        ATGoals: 1
+    )
+    
+    let match3 = Match(
+        matchStartTimestamp: 1773421200,
+        HTLogo: UIImage(named: "Manchester United"),
+        ATLogo: UIImage(named: "Barcelona"),
+        HTName: "Manchester United",
+        ATName: "Barcelona",
+        HTGoals: 2,
+        ATGoals: 2
+    )
+    
+    let match4 = Match(
+        matchStartTimestamp: 1773426600,
+        HTLogo: UIImage(named: "Manchester United"),
+        ATLogo: UIImage(named: "Barcelona"),
+        HTName: "Manchester United",
+        ATName: "Barcelona",
+        HTGoals: 0,
+        ATGoals: 0
+    )
+    
     
     func matchColors(MV: MatchView, match: Match){
-        MV.MatchStart.text = match.matchStart
-        MV.MatchStart.textColor = match.matchStartColor
-        MV.MinuteMatch.text = match.minute
-        MV.MinuteMatch.textColor = match.minuteColor
-        MV.HomeTeamName.textColor = match.HTNameColor
-        MV.AwayTeamName.textColor = match.ATNameColor
-        MV.HomeTeamGoals.text = match.HTGString
-        MV.HomeTeamGoals.textColor = match.HTScoreColor
-        MV.AwayTeamGoals.text = match.ATGString
-        MV.AwayTeamGoals.textColor = match.ATScoreColor
+        MV.matchStart.text = match.matchStart
+        MV.matchStart.textColor = match.colors.matchStartColor
+        MV.minuteMatch.text = match.minute
+        MV.minuteMatch.textColor = match.minuteColor
+        MV.homeTeamName.textColor = match.HTNameColor
+        MV.awayTeamName.textColor = match.ATNameColor
+        MV.homeTeamGoals.text = match.HTGString
+        MV.homeTeamGoals.textColor = match.HTScoreColor
+        MV.awayTeamGoals.text = match.ATGString
+        MV.awayTeamGoals.textColor = match.ATScoreColor
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        
-        view.addSubview(leagueView)
-        view.addSubview(matchView1)
-        view.addSubview(matchView2)
-        view.addSubview(matchView3)
-        view.addSubview(matchView4)
-        
-        
-        let LaLiga = League(
-            logo: UIImage(named: "LaLiga"),
-            name: "LaLiga",
-            country: "Spain"
-        )
-        
-        let match1 = Match(
-            matchStartTimestamp: 1773394200,
-            HTLogo: UIImage(named: "Manchester United"),
-            ATLogo: UIImage(named: "Barcelona"),
-            HTName: "Manchester United",
-            ATName: "Barcelona",
-            HTGoals: 1,
-            ATGoals: 2
-        )
-        
-        let match2 = Match(
-            matchStartTimestamp: 1773405000,
-            HTLogo: UIImage(named: "Manchester United"),
-            ATLogo: UIImage(named: "Barcelona"),
-            HTName: "Manchester United",
-            ATName: "Barcelona",
-            HTGoals: 0,
-            ATGoals: 1
-        )
-        
-        let match3 = Match(
-            matchStartTimestamp: 1773421200,
-            HTLogo: UIImage(named: "Manchester United"),
-            ATLogo: UIImage(named: "Barcelona"),
-            HTName: "Manchester United",
-            ATName: "Barcelona",
-            HTGoals: 2,
-            ATGoals: 2
-        )
-        
-        let match4 = Match(
-            matchStartTimestamp: 1773426600,
-            HTLogo: UIImage(named: "Manchester United"),
-            ATLogo: UIImage(named: "Barcelona"),
-            HTName: "Manchester United",
-            ATName: "Barcelona",
-            HTGoals: 0,
-            ATGoals: 0
-        )
-        
+    func setUpConstraints(){
         leagueView.snp.makeConstraints{ make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(192)
         }
@@ -107,8 +96,10 @@ class ViewController: UIViewController {
         matchView4.snp.makeConstraints{ make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(416)
         }
-        
-        leagueView.leagueInfo(with: LaLiga)
+    }
+    
+    func styleViews(){
+        leagueView.leagueInfo(with: laLiga)
         
         matchView1.MatchInfo(with: match1)
         matchColors(MV: matchView1, match: match1)
@@ -121,6 +112,22 @@ class ViewController: UIViewController {
         
         matchView4.MatchInfo(with: match4)
         matchColors(MV: matchView4, match: match4)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
+        view.addSubview(leagueView)
+        view.addSubview(matchView1)
+        view.addSubview(matchView2)
+        view.addSubview(matchView3)
+        view.addSubview(matchView4)
+        
+        setUpConstraints()
+        styleViews()
+        
     }
 }
 

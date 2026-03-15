@@ -1,17 +1,11 @@
 //
-//  Models.swift
+//  Match.swift
 //  sofascore
 //
-//  Created by akademija on 11.03.2026..
+//  Created by akademija on 15.03.2026..
 //
 
 import UIKit
-
-struct League{
-    let logo: UIImage?
-    let name: String
-    let country: String
-}
 
 struct Match{
     let matchStartTimestamp: Int
@@ -76,67 +70,54 @@ struct Match{
         return "\(ATGoals)"
     }
     
-    let matchStartColor = UIColor.gray
-    
-    let notLiveColor = UIColor.gray
-    let liveColor = UIColor.red
-    let FinishedColor = UIColor.gray
-    
-    let winColor = UIColor.black
-    let lossColor = UIColor.gray
-    let drawColor = UIColor.gray
-    
-    let TeamColor = UIColor.black
-    let TeamWinColor = UIColor.black
-    let TeamLossColor = UIColor.gray
-    let TeamDrawColor = UIColor.gray
+    var colors: Colors = Colors()
     
     var minuteColor: UIColor {
         if ((1...90).contains(minuteInt)){
-            return liveColor
+            return colors.liveColor
         }
         else if minuteInt > 90 {
-            return FinishedColor
+            return colors.FinishedColor
         }
-        return notLiveColor
+        return colors.notLiveColor
     }
         
     var HTNameColor: UIColor {
         if minuteInt > 90 {
             if HTGoals > ATGoals {
-                return TeamWinColor
+                return colors.teamWinColor
             }
             else if HTGoals < ATGoals {
-                return TeamLossColor
+                return colors.teamLossColor
             }
-            return TeamDrawColor
+            return colors.teamDrawColor
         }
-        return TeamColor
+        return colors.teamColor
     }
     
     var ATNameColor: UIColor {
         if minuteInt > 90 {
             if ATGoals > HTGoals {
-                return TeamWinColor
+                return colors.teamWinColor
             }
             else if ATGoals < HTGoals {
-                return TeamLossColor
+                return colors.teamLossColor
             }
-            return TeamDrawColor
+            return colors.teamDrawColor
         }
-        return TeamColor
+        return colors.teamColor
     }
     
     var HTScoreColor: UIColor {
         if (1...90).contains(minuteInt){
-            return liveColor
+            return colors.liveColor
         }
         return HTNameColor
     }
     
     var ATScoreColor: UIColor {
         if (1...90).contains(minuteInt){
-            return liveColor
+            return colors.liveColor
         }
         return ATNameColor
     }

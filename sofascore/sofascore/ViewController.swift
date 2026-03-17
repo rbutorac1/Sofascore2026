@@ -16,56 +16,25 @@ class ViewController: UIViewController {
     let matchView3 = MatchView()
     let matchView4 = MatchView()
     
-    let laLiga = League(
-        logo: UIImage(named: "LaLiga"),
-        name: "LaLiga",
-        country: "Spain"
-    )
-    
-    let match1 = Match(
-        matchStartTimestamp: 1773394200,
-        HTLogo: UIImage(named: "Manchester United"),
-        ATLogo: UIImage(named: "Barcelona"),
-        HTName: "Manchester United",
-        ATName: "Barcelona",
-        HTGoals: 1,
-        ATGoals: 2
-    )
-    
-    let match2 = Match(
-        matchStartTimestamp: 1773405000,
-        HTLogo: UIImage(named: "Manchester United"),
-        ATLogo: UIImage(named: "Barcelona"),
-        HTName: "Manchester United",
-        ATName: "Barcelona",
-        HTGoals: 0,
-        ATGoals: 1
-    )
-    
-    let match3 = Match(
-        matchStartTimestamp: 1773421200,
-        HTLogo: UIImage(named: "Manchester United"),
-        ATLogo: UIImage(named: "Barcelona"),
-        HTName: "Manchester United",
-        ATName: "Barcelona",
-        HTGoals: 2,
-        ATGoals: 2
-    )
-    
-    let match4 = Match(
-        matchStartTimestamp: 1773426600,
-        HTLogo: UIImage(named: "Manchester United"),
-        ATLogo: UIImage(named: "Barcelona"),
-        HTName: "Manchester United",
-        ATName: "Barcelona",
-        HTGoals: 0,
-        ATGoals: 0
-    )
-    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
+        view.addSubview(leagueView)
+        view.addSubview(matchView1)
+        view.addSubview(matchView2)
+        view.addSubview(matchView3)
+        view.addSubview(matchView4)
+        
+        setUpConstraints()
+        styleViews()
+    }
     
     func matchColors(MV: MatchView, match: Match){
         MV.matchStart.text = match.matchStart
-        MV.matchStart.textColor = match.colors.matchStartColor
+        MV.matchStart.textColor = Colors.matchStartColor
         MV.minuteMatch.text = match.minute
         MV.minuteMatch.textColor = match.minuteColor
         MV.homeTeamName.textColor = match.HTNameColor
@@ -99,35 +68,19 @@ class ViewController: UIViewController {
     }
     
     func styleViews(){
-        leagueView.leagueInfo(with: laLiga)
+        leagueView.leagueInfo(with: Leagues.laLiga)
         
-        matchView1.MatchInfo(with: match1)
-        matchColors(MV: matchView1, match: match1)
+        matchView1.matchInfo(with: Matches.match1)
+        matchColors(MV: matchView1, match: Matches.match1)
         
-        matchView2.MatchInfo(with: match2)
-        matchColors(MV: matchView2, match: match2)
+        matchView2.matchInfo(with: Matches.match2)
+        matchColors(MV: matchView2, match: Matches.match2)
         
-        matchView3.MatchInfo(with: match3)
-        matchColors(MV: matchView3, match: match3)
+        matchView3.matchInfo(with: Matches.match3)
+        matchColors(MV: matchView3, match: Matches.match3)
         
-        matchView4.MatchInfo(with: match4)
-        matchColors(MV: matchView4, match: match4)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        
-        view.addSubview(leagueView)
-        view.addSubview(matchView1)
-        view.addSubview(matchView2)
-        view.addSubview(matchView3)
-        view.addSubview(matchView4)
-        
-        setUpConstraints()
-        styleViews()
-        
+        matchView4.matchInfo(with: Matches.match4)
+        matchColors(MV: matchView4, match: Matches.match4)
     }
 }
 

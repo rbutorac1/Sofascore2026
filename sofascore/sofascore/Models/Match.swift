@@ -7,7 +7,14 @@
 
 import UIKit
 
-struct Match{
+private enum Numbers {
+    
+    static let matchDuration = 90
+    static let secondsInMinute = 60
+}
+
+struct Match {
+    
     let matchStartTimestamp: Int
     let HTLogo: UIImage?
     let ATLogo: UIImage?
@@ -33,9 +40,9 @@ struct Match{
         
         let diff = now.timeIntervalSince(start)
         
-        let minute = Int((diff + 59) / 60)
+        let minute = Int((Int(diff) + 59) / Numbers.secondsInMinute)
         
-        if minute > 90 {
+        if minute > Numbers.matchDuration {
             return "FT"
         }
         else if minute <= 0 {
@@ -51,7 +58,7 @@ struct Match{
         
         let diff = now.timeIntervalSince(start)
         
-        let minute = Int((diff + 59) / 60)
+        let minute = Int((Int(diff) + 59) / Numbers.secondsInMinute)
         
         return minute
     }
@@ -70,54 +77,52 @@ struct Match{
         return "\(ATGoals)"
     }
     
-    var colors: Colors = Colors()
-    
     var minuteColor: UIColor {
-        if ((1...90).contains(minuteInt)){
-            return colors.liveColor
+        if ((1...Numbers.matchDuration).contains(minuteInt)){
+            return Colors.liveColor
         }
-        else if minuteInt > 90 {
-            return colors.FinishedColor
+        else if minuteInt > Numbers.matchDuration {
+            return Colors.FinishedColor
         }
-        return colors.notLiveColor
+        return Colors.notLiveColor
     }
         
     var HTNameColor: UIColor {
-        if minuteInt > 90 {
+        if minuteInt > Numbers.matchDuration {
             if HTGoals > ATGoals {
-                return colors.teamWinColor
+                return Colors.teamWinColor
             }
             else if HTGoals < ATGoals {
-                return colors.teamLossColor
+                return Colors.teamLossColor
             }
-            return colors.teamDrawColor
+            return Colors.teamDrawColor
         }
-        return colors.teamColor
+        return Colors.teamColor
     }
     
     var ATNameColor: UIColor {
-        if minuteInt > 90 {
+        if minuteInt > Numbers.matchDuration {
             if ATGoals > HTGoals {
-                return colors.teamWinColor
+                return Colors.teamWinColor
             }
             else if ATGoals < HTGoals {
-                return colors.teamLossColor
+                return Colors.teamLossColor
             }
-            return colors.teamDrawColor
+            return Colors.teamDrawColor
         }
-        return colors.teamColor
+        return Colors.teamColor
     }
     
     var HTScoreColor: UIColor {
-        if (1...90).contains(minuteInt){
-            return colors.liveColor
+        if (1...Numbers.matchDuration).contains(minuteInt){
+            return Colors.liveColor
         }
         return HTNameColor
     }
     
     var ATScoreColor: UIColor {
-        if (1...90).contains(minuteInt){
-            return colors.liveColor
+        if (1...Numbers.matchDuration).contains(minuteInt){
+            return Colors.liveColor
         }
         return ATNameColor
     }

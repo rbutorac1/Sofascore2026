@@ -8,6 +8,7 @@
 import UIKit
 
 struct League{
+    
     let logo: UIImage?
     let name: String
     let country: String

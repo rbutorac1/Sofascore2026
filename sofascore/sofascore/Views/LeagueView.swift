@@ -10,10 +10,9 @@ import SnapKit
 import SofaAcademic
 
 class LeagueView: BaseView {
+    
     let mainCell = UIView()
-    
     let textCell = UIView()
-    
     let leagueImage = UIImageView()
     let countryName = UILabel()
     let leagueName = UILabel()
@@ -30,22 +29,21 @@ class LeagueView: BaseView {
         textCell.addSubview(countryName)
         textCell.addSubview(arrowImage)
         textCell.addSubview(leagueName)
-        
     }
     
     override func styleViews(){
         mainCell.backgroundColor = .white
         textCell.backgroundColor = .white
         
-        countryName.font = UIFont(name: "Roboto-Bold", size: 14)
+        countryName.font = Fonts.RobotoBoldTitle
         countryName.textColor = .black
         countryName.numberOfLines = 1
         
-        leagueName.font = UIFont(name: "Roboto-Bold", size: 14)
+        leagueName.font = Fonts.RobotoBoldTitle
         leagueName.textColor = .gray
         leagueName.numberOfLines = 1
         
-        arrowImage.image = UIImage(named: "ic_pointer_right")
+        arrowImage.image = Images.pointerRight
         
     }
     

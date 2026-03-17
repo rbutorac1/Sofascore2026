@@ -10,22 +10,18 @@ import SnapKit
 import SofaAcademic
 
 class MatchView: BaseView {
-    let mainCell = UIView()
     
+    let mainCell = UIView()
     let timeCell = UIView()
     let matchStart = UILabel()
     let minuteMatch = UILabel()
-    
     let dividerLine = UIImageView()
-    
     let homeTeamCell = UIView()
     let homeTeamName = UILabel()
     let homeTeamLogo = UIImageView()
-    
     let awayTeamCell = UIView()
     let awayTeamName = UILabel()
     let awayTeamLogo = UIImageView()
-    
     let homeTeamGoals = UILabel()
     let awayTeamGoals = UILabel()
     
@@ -48,7 +44,6 @@ class MatchView: BaseView {
         
         awayTeamCell.addSubview(awayTeamName)
         awayTeamCell.addSubview(awayTeamLogo)
-        
     }
     
     override func styleViews(){
@@ -56,26 +51,25 @@ class MatchView: BaseView {
         
         timeCell.backgroundColor = .white
         
-        matchStart.font = UIFont(name: "Roboto-Regular", size: 12)
+        matchStart.font = Fonts.RobotoRegularTitle
         matchStart.textColor = .gray
         matchStart.textAlignment = .center
         
-        minuteMatch.font = UIFont(name: "Roboto-Regular", size: 12)
+        minuteMatch.font = Fonts.RobotoRegularTitle
         minuteMatch.textColor = .gray
         minuteMatch.textAlignment = .center
         
-        dividerLine.image = UIImage(named: "Assets Drawable")
+        dividerLine.image = Images.divider
         
-        homeTeamName.font = UIFont(name: "Roboto-Regular", size: 14)
+        homeTeamName.font = Fonts.RobotoRegularTitle
         homeTeamName.numberOfLines = 1
-        awayTeamName.font = UIFont(name: "Roboto-Regular", size: 14)
+        awayTeamName.font = Fonts.RobotoRegularTitle
         awayTeamName.numberOfLines = 1
         
-        homeTeamGoals.font = UIFont(name: "Roboto-Regular", size: 14)
+        homeTeamGoals.font = Fonts.RobotoRegularTitle
         homeTeamGoals.textAlignment = .right
-        awayTeamGoals.font = UIFont(name: "Roboto-Regular", size: 14)
+        awayTeamGoals.font = Fonts.RobotoRegularTitle
         awayTeamGoals.textAlignment = .right
-        
     }
     
     override func setupConstraints(){
@@ -165,14 +159,14 @@ class MatchView: BaseView {
         }
     }
     
-    func MatchInfo(with match: Match){
+    func matchInfo(with match: Match){
         matchStart.text = match.matchStart
         minuteMatch.text = match.minute
         homeTeamLogo.image = match.HTLogo
         awayTeamLogo.image = match.ATLogo
         homeTeamName.text = match.HTName
         awayTeamName.text = match.ATName
-        homeTeamGoals.text = "\(match.HTGoals)"
-        awayTeamGoals.text = "\(match.ATGoals)"
+        homeTeamGoals.text = match.HTGString
+        awayTeamGoals.text = match.ATGString
     }
 }

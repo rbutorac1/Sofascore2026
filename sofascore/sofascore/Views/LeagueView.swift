@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import SofaAcademic
+import SDWebImage
 
 class LeagueView: BaseView {
     
@@ -17,7 +18,6 @@ class LeagueView: BaseView {
     let countryName = UILabel()
     let leagueName = UILabel()
     let arrowImage = UIImageView()
-    
     
     override func addViews(){
         
@@ -50,8 +50,7 @@ class LeagueView: BaseView {
     override func setupConstraints(){
         mainCell.snp.makeConstraints{ make in
             make.top.equalTo(safeAreaLayoutGuide)
-            make.leading.equalTo(safeAreaLayoutGuide)
-            make.trailing.equalTo(safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
             make.height.equalTo(56)
         }
         
@@ -89,8 +88,8 @@ class LeagueView: BaseView {
     }
     
     func leagueInfo(with league: League){
-        leagueImage.image = league.logo
-        countryName.text = league.country
+        leagueImage.sd_setImage(with: URL(string: league.logoUrl!))
+        countryName.text = league.country!.name
         leagueName.text = league.name
     }
 }

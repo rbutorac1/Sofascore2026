@@ -2,29 +2,56 @@
 //  Match.swift
 //  sofascore
 //
-//  Created by akademija on 15.03.2026..
+//  Created by akademija on 19.03.2026..
 //
 
 import UIKit
-
-private enum Numbers {
-    
-    static let matchDuration = 90
-    static let secondsInMinute = 60
-}
+import SofaAcademic
+import SDWebImage
 
 struct Match {
     
-    let matchStartTimestamp: Int
-    let HTLogo: UIImage?
-    let ATLogo: UIImage?
+    private enum Constants {
+        
+        static let secondsInMinute = 60
+    }
+    
+    let matchStart: String
+    let minute: String
+    let HTLogoURL: String?
+    let ATLogoURL: String?
     let HTName: String
     let ATName: String
-    var HTGoals: Int
-    var ATGoals: Int
+    let HTGoals: Int?
+    let ATGoals: Int?
+    let HTGoalsString: String
+    let ATGoalsString: String
+    let minuteColor: UIColor
+    let HTNameColor: UIColor
+    let ATNameColor: UIColor
+    let HTScoreColor: UIColor?
+    let ATScoreColor: UIColor?
     
-    var matchStart: String {
-        let date = Date(timeIntervalSince1970: TimeInterval(matchStartTimestamp))
+    init(event: Event){
+        self.matchStart = Match.matchStartString(startTimestamp: event.startTimestamp)
+        self.minute = Match.minuteString(startTimestamp: event.startTimestamp, status: event.status)
+        self.HTLogoURL = event.homeTeam.logoUrl
+        self.ATLogoURL = event.awayTeam.logoUrl
+        self.HTName = event.homeTeam.name
+        self.ATName = event.awayTeam.name
+        self.HTGoals = event.homeScore
+        self.ATGoals = event.awayScore
+        self.HTGoalsString = Match.HTGStringFunc(homeGoals: event.homeScore)
+        self.ATGoalsString = Match.ATGStringFunc(awayGoals: event.awayScore)
+        self.minuteColor = Match.minuteColorFunc(status: event.status)
+        self.HTScoreColor = Match.HTScoreColorFunc(homeGoals: HTGoals, awayGoals: ATGoals, status: event.status)
+        self.ATScoreColor = Match.ATScoreColorFunc(homeGoals: HTGoals, awayGoals: ATGoals, status: event.status)
+        self.HTNameColor = Match.HTNameColorFunc(homeGoals: HTGoals, awayGoals: ATGoals, status: event.status)
+        self.ATNameColor = Match.ATNameColorFunc(homeGoals: HTGoals, awayGoals: ATGoals, status: event.status)
+    }
+    
+    private static func matchStartString(startTimestamp: Int) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(startTimestamp))
         
         let format = DateFormatter()
         format.dateFormat = "HH:mm"
@@ -34,96 +61,101 @@ struct Match {
         return "\(start)"
     }
     
-    var minute: String {
-        let start = Date(timeIntervalSince1970: TimeInterval(matchStartTimestamp))
-        let now = Date()
-        
-        let diff = now.timeIntervalSince(start)
-        
-        let minute = Int((Int(diff) + 59) / Numbers.secondsInMinute)
-        
-        if minute > Numbers.matchDuration {
-            return "FT"
-        }
-        else if minute <= 0 {
+    private static func minuteString(startTimestamp: Int, status: EventStatus) -> String {
+        if status == EventStatus.notStarted {
             return "-"
         }
-        
-        return "\(minute)'"
+        else if status == EventStatus.halftime {
+            return "HT"
+        }
+        else if status == EventStatus.finished {
+            return "FT"
+        }
+        else {
+            let start = Date(timeIntervalSince1970: TimeInterval(startTimestamp))
+            let now = Date()
+            
+            let diff = now.timeIntervalSince(start)
+            
+            let minute = Int((Int(diff) + 59) / Constants.secondsInMinute)
+            
+            return "\(minute)'"
+        }
     }
     
-    var minuteInt: Int {
-        let start = Date(timeIntervalSince1970: TimeInterval(matchStartTimestamp))
-        let now = Date()
+    private static func minuteColorFunc(status: EventStatus) -> UIColor {
+        switch status {
+        case EventStatus.inProgress, EventStatus.halftime: return Colors.liveColor
+        case EventStatus.finished: return Colors.FinishedColor
+        default: return Colors.notLiveColor
+        }
+    }
         
-        let diff = now.timeIntervalSince(start)
-        
-        let minute = Int((Int(diff) + 59) / Numbers.secondsInMinute)
-        
-        return minute
+    private static func HTScoreColorFunc(homeGoals: Int?, awayGoals: Int?, status: EventStatus) -> UIColor? {
+        if status == EventStatus.notStarted { return nil }
+        else if (status == EventStatus.inProgress || status == EventStatus.halftime){ return Colors.liveColor }
+        else {
+            let score = homeGoals! - awayGoals!
+            switch score {
+            case 1...1000: return Colors.teamWinColor
+            case (-1000)...(-1): return Colors.teamLossColor
+            default: return Colors.teamDrawColor
+            }
+        }
     }
     
-    var HTGString: String {
-        if minute == "-" {
+    private static func ATScoreColorFunc(homeGoals: Int?, awayGoals: Int?, status: EventStatus) -> UIColor? {
+        if status == EventStatus.notStarted { return nil }
+        else if (status == EventStatus.inProgress || status == EventStatus.halftime){ return Colors.liveColor }
+        else {
+            let score = awayGoals! - homeGoals!
+            switch score {
+            case 1...1000: return Colors.teamWinColor
+            case (-1000)...(-1): return Colors.teamLossColor
+            default: return Colors.teamDrawColor
+            }
+        }
+    }
+    
+    private static func HTGStringFunc(homeGoals: Int?) -> String {
+        guard let homeGoals = homeGoals else {
             return ""
         }
-        return "\(HTGoals)"
+        return "\(homeGoals)"
     }
     
-    var ATGString: String {
-        if minute == "-" {
+    private static func ATGStringFunc(awayGoals: Int?) -> String {
+        guard let awayGoals = awayGoals else {
             return ""
         }
-        return "\(ATGoals)"
+        return "\(awayGoals)"
     }
     
-    var minuteColor: UIColor {
-        if ((1...Numbers.matchDuration).contains(minuteInt)){
-            return Colors.liveColor
-        }
-        else if minuteInt > Numbers.matchDuration {
-            return Colors.FinishedColor
-        }
-        return Colors.notLiveColor
-    }
-        
-    var HTNameColor: UIColor {
-        if minuteInt > Numbers.matchDuration {
-            if HTGoals > ATGoals {
+    private static func HTNameColorFunc(homeGoals: Int?, awayGoals: Int?, status: EventStatus) -> UIColor {
+        if status != EventStatus.finished { return Colors.teamColor }
+        else {
+            let score = homeGoals! - awayGoals!
+            if score > 0 {
                 return Colors.teamWinColor
-            }
-            else if HTGoals < ATGoals {
+            } else if score < 0 {
                 return Colors.teamLossColor
+            } else {
+                return Colors.teamDrawColor
             }
-            return Colors.teamDrawColor
         }
-        return Colors.teamColor
     }
     
-    var ATNameColor: UIColor {
-        if minuteInt > Numbers.matchDuration {
-            if ATGoals > HTGoals {
+    private static func ATNameColorFunc(homeGoals: Int?, awayGoals: Int?, status: EventStatus) -> UIColor {
+        if status != EventStatus.finished { return Colors.teamColor }
+        else {
+            let score = awayGoals! - homeGoals!
+            if score > 0 {
                 return Colors.teamWinColor
-            }
-            else if ATGoals < HTGoals {
+            } else if score < 0 {
                 return Colors.teamLossColor
+            } else {
+                return Colors.teamDrawColor
             }
-            return Colors.teamDrawColor
         }
-        return Colors.teamColor
-    }
-    
-    var HTScoreColor: UIColor {
-        if (1...Numbers.matchDuration).contains(minuteInt){
-            return Colors.liveColor
-        }
-        return HTNameColor
-    }
-    
-    var ATScoreColor: UIColor {
-        if (1...Numbers.matchDuration).contains(minuteInt){
-            return Colors.liveColor
-        }
-        return ATNameColor
     }
 }

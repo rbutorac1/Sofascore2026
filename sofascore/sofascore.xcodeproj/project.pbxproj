@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D25F58362F6C5AE500E135C1 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = D25F58352F6C5AE500E135C1 /* SDWebImage */; };
 		D27C58212F5B1B1600CBE6B2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D27C58202F5B1B1600CBE6B2 /* SnapKit */; };
 		D2BAB7A22F60CBFF00D72909 /* SofaAcademic in Frameworks */ = {isa = PBXBuildFile; productRef = D2BAB7A12F60CBFF00D72909 /* SofaAcademic */; };
 /* End PBXBuildFile section */
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D25F58362F6C5AE500E135C1 /* SDWebImage in Frameworks */,
 				D2BAB7A22F60CBFF00D72909 /* SofaAcademic in Frameworks */,
 				D27C58212F5B1B1600CBE6B2 /* SnapKit in Frameworks */,
 			);
@@ -87,6 +89,7 @@
 			packageProductDependencies = (
 				D27C58202F5B1B1600CBE6B2 /* SnapKit */,
 				D2BAB7A12F60CBFF00D72909 /* SofaAcademic */,
+				D25F58352F6C5AE500E135C1 /* SDWebImage */,
 			);
 			productName = sofascore;
 			productReference = D27C58072F5B1AE300CBE6B2 /* sofascore.app */;
@@ -119,6 +122,7 @@
 			packageReferences = (
 				D27C581F2F5B1B1600CBE6B2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				D2BAB7A02F60CBFF00D72909 /* XCRemoteSwiftPackageReference "academy" */,
+				D25F58342F6C5AE500E135C1 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D27C58082F5B1AE300CBE6B2 /* Products */;
@@ -354,6 +358,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D25F58342F6C5AE500E135C1 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.7;
+			};
+		};
 		D27C581F2F5B1B1600CBE6B2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -373,6 +385,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D25F58352F6C5AE500E135C1 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D25F58342F6C5AE500E135C1 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
 		D27C58202F5B1B1600CBE6B2 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D27C581F2F5B1B1600CBE6B2 /* XCRemoteSwiftPackageReference "SnapKit" */;

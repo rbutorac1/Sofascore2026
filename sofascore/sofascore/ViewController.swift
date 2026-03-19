@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import SofaAcademic
 
 class ViewController: UIViewController {
     
@@ -15,6 +16,7 @@ class ViewController: UIViewController {
     let matchView2 = MatchView()
     let matchView3 = MatchView()
     let matchView4 = MatchView()
+    let data = Hw2Data()
     
     override func viewDidLoad() {
         
@@ -39,9 +41,9 @@ class ViewController: UIViewController {
         MV.minuteMatch.textColor = match.minuteColor
         MV.homeTeamName.textColor = match.HTNameColor
         MV.awayTeamName.textColor = match.ATNameColor
-        MV.homeTeamGoals.text = match.HTGString
+        MV.homeTeamGoals.text = match.HTGoalsString
         MV.homeTeamGoals.textColor = match.HTScoreColor
-        MV.awayTeamGoals.text = match.ATGString
+        MV.awayTeamGoals.text = match.ATGoalsString
         MV.awayTeamGoals.textColor = match.ATScoreColor
     }
     
@@ -68,19 +70,19 @@ class ViewController: UIViewController {
     }
     
     func styleViews(){
-        leagueView.leagueInfo(with: Leagues.laLiga)
+        leagueView.leagueInfo(with: data.laLiga)
         
-        matchView1.matchInfo(with: Matches.match1)
-        matchColors(MV: matchView1, match: Matches.match1)
+        matchView1.matchInfo(with: data.matches[0])
+        matchColors(MV: matchView1, match: data.matches[0])
         
-        matchView2.matchInfo(with: Matches.match2)
-        matchColors(MV: matchView2, match: Matches.match2)
+        matchView2.matchInfo(with: data.matches[1])
+        matchColors(MV: matchView2, match: data.matches[1])
         
-        matchView3.matchInfo(with: Matches.match3)
-        matchColors(MV: matchView3, match: Matches.match3)
+        matchView3.matchInfo(with: data.matches[2])
+        matchColors(MV: matchView3, match: data.matches[2])
         
-        matchView4.matchInfo(with: Matches.match4)
-        matchColors(MV: matchView4, match: Matches.match4)
+        matchView4.matchInfo(with: data.matches[3])
+        matchColors(MV: matchView4, match: data.matches[3])
     }
 }
 

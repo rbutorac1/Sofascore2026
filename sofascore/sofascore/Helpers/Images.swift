@@ -15,5 +15,4 @@ struct Images {
     static let bundesliga: UIImage = UIImage(named: "Bundesliga")!
     static let barcelona: UIImage = UIImage(named: "Barcelona")!
     static let manchesterUnited: UIImage = UIImage(named: "Manchester United")!
-
 }

@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import SofaAcademic
+import SDWebImage
 
 class MatchView: BaseView {
     
@@ -162,11 +163,11 @@ class MatchView: BaseView {
     func matchInfo(with match: Match){
         matchStart.text = match.matchStart
         minuteMatch.text = match.minute
-        homeTeamLogo.image = match.HTLogo
-        awayTeamLogo.image = match.ATLogo
+        homeTeamLogo.sd_setImage(with: URL(string: match.HTLogoURL!))
+        awayTeamLogo.sd_setImage(with: URL(string: match.ATLogoURL!))
         homeTeamName.text = match.HTName
         awayTeamName.text = match.ATName
-        homeTeamGoals.text = match.HTGString
-        awayTeamGoals.text = match.ATGString
+        homeTeamGoals.text = match.HTGoalsString
+        awayTeamGoals.text = match.ATGoalsString
     }
 }

@@ -19,8 +19,4 @@ public class Hw2Data {
         let data = Homework2DataSource()
         return data.laLigaEvents()
     }
-
-    var matches: [Match] {
-        events.map { Match(event: $0) }
-    }
 }

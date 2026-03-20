@@ -7,7 +7,9 @@
 
 import UIKit
 
-struct Colors {
+enum Colors {
+    
+    static let defaultBackgroundColor: UIColor = UIColor.white
     
     static let matchStartColor: UIColor = UIColor.gray
     

@@ -12,12 +12,12 @@ import SDWebImage
 
 class LeagueView: BaseView {
     
-    let mainCell = UIView()
-    let textCell = UIView()
-    let leagueImage = UIImageView()
-    let countryName = UILabel()
-    let leagueName = UILabel()
-    let arrowImage = UIImageView()
+    let mainCell: UIView = UIView()
+    let textCell: UIView = UIView()
+    let leagueImage: UIImageView = UIImageView()
+    let countryName: UILabel = UILabel()
+    let leagueName: UILabel = UILabel()
+    let arrowImage: UIImageView = UIImageView()
     
     override func addViews(){
         
@@ -44,27 +44,35 @@ class LeagueView: BaseView {
         leagueName.numberOfLines = 1
         
         arrowImage.image = Images.pointerRight
+    }
+    
+    enum Measures {
         
+        static let leageCellHeight = 56
+        static let leadingOffset = 16
+        static let imagedWidthHeight = 32
+        static let imageTextSpacing = 32
+        static let textCellHeight = 24
     }
     
     override func setupConstraints(){
         mainCell.snp.makeConstraints{ make in
             make.top.equalTo(safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(56)
+            make.height.equalTo(Measures.leageCellHeight)
         }
         
         leagueImage.snp.makeConstraints{ make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(16)
-            make.height.equalTo(32)
-            make.width.equalTo(32)
+            make.leading.equalToSuperview().offset(Measures.leadingOffset)
+            make.height.equalTo(Measures.imagedWidthHeight)
+            make.width.equalTo(Measures.imagedWidthHeight)
         }
         
         textCell.snp.makeConstraints{ make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(80)
-            make.height.equalTo(24)
+            make.leading.equalTo(leagueImage.snp.trailing).offset(Measures.imageTextSpacing)
+            make.height.equalTo(Measures.textCellHeight)
         }
         
         countryName.snp.makeConstraints{ make in
@@ -75,15 +83,12 @@ class LeagueView: BaseView {
         arrowImage.snp.makeConstraints{ make in
             make.top.equalToSuperview()
             make.leading.equalTo(countryName.snp.trailing)
-            make.height.equalTo(24)
-            make.width.equalTo(24)
+            make.height.equalToSuperview()
         }
         
         leagueName.snp.makeConstraints{ make in
             make.centerY.equalToSuperview()
             make.leading.equalTo(arrowImage.snp.trailing)
-            make.height.equalTo(16)
-            make.width.equalTo(91)
         }
     }
     

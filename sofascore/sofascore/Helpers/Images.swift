@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Images {
+enum Images {
     
     static let pointerRight: UIImage = UIImage(named: "ic_pointer_right")!
     static let divider: UIImage = UIImage(named: "Assets Drawable")!

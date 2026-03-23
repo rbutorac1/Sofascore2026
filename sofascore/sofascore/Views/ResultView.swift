@@ -11,6 +11,13 @@ import SofaAcademic
 
 class ResultView: BaseView {
     
+    enum Measures {
+        
+        static let resultViewWidth = 64
+        static let verticalOffset = 10
+        static let trailingOffset = 16
+    }
+    
     let mainCell: UIView = UIView()
     let homeTeamGoals: UILabel = UILabel()
     let awayTeamGoals: UILabel = UILabel()
@@ -29,13 +36,6 @@ class ResultView: BaseView {
         homeTeamGoals.textAlignment = .right
         awayTeamGoals.font = Fonts.RobotoRegularTitle
         awayTeamGoals.textAlignment = .right
-    }
-    
-    enum Measures {
-        
-        static let resultViewWidth = 64
-        static let verticalOffset = 10
-        static let trailingOffset = 16
     }
     
     override func setupConstraints(){
@@ -57,7 +57,7 @@ class ResultView: BaseView {
     }
     
     func resultInfo(homeGoals: Int?, awayGoals: Int?, status: EventStatus){
-        (homeTeamGoals.text, awayTeamGoals.text) = goalsString(homeGoals: homeGoals, awayGoals: awayGoals)
-        (homeTeamGoals.textColor, awayTeamGoals.textColor) = goalsColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status)
+        (homeTeamGoals.text, awayTeamGoals.text) = Helper.goalsString(homeGoals: homeGoals, awayGoals: awayGoals)
+        (homeTeamGoals.textColor, awayTeamGoals.textColor) = Helper.goalsColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status)
     }
 }

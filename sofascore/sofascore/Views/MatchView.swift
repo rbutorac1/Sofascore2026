@@ -12,6 +12,13 @@ import SDWebImage
 
 class MatchView: BaseView {
     
+    enum Measures {
+        
+        static let cellHeight = 56
+        static let timeCellWidth = 64
+        static let resultCellWidth = 64
+    }
+    
     let mainCell: UIView = UIView()
     let timeStatusCell: TimeStatusView = TimeStatusView()
     let teamSectionCell: TeamSectionView = TeamSectionView()
@@ -27,13 +34,6 @@ class MatchView: BaseView {
     
     override func styleViews(){
         mainCell.backgroundColor = .white
-    }
-    
-    enum Measures {
-        
-        static let cellHeight = 56
-        static let timeCellWidth = 64
-        static let resultCellWidth = 64
     }
     
     override func setupConstraints(){

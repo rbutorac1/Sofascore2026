@@ -11,6 +11,14 @@ import SofaAcademic
 
 class TimeStatusView: BaseView {
     
+    enum Measures {
+        
+        static let timeStatusViewWidth = 64
+        static let verticalOffset = 10
+        static let dividerOffset = 8
+        static let leadingTrailingOffset = 4
+    }
+    
     let timeCell: UIView = UIView()
     let matchStartCell: UILabel = UILabel()
     let minuteCell: UILabel = UILabel()
@@ -38,14 +46,6 @@ class TimeStatusView: BaseView {
         dividerLine.image = .assetsDrawable
     }
     
-    enum Measures {
-        
-        static let timeStatusViewWidth = 64
-        static let verticalOffset = 10
-        static let dividerOffset = 8
-        static let leadingTrailingOffset = 4
-    }
-    
     override func setupConstraints(){
         timeCell.snp.makeConstraints{ make in
             make.top.bottom.equalToSuperview()
@@ -71,8 +71,8 @@ class TimeStatusView: BaseView {
     }
     
     func timeStatusInfo(startTimestamp: Int, status: EventStatus){
-        matchStartCell.text = matchStart(startTimestamp: startTimestamp)
-        minuteCell.text = minute(startTimestamp: startTimestamp, status: status)
-        minuteCell.textColor = minuteColor(status: status)
+        matchStartCell.text = Helper.matchStart(startTimestamp: startTimestamp)
+        minuteCell.text = Helper.minute(startTimestamp: startTimestamp, status: status)
+        minuteCell.textColor = Helper.minuteColor(status: status)
     }
 }

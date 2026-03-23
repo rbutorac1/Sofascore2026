@@ -12,6 +12,15 @@ import SDWebImage
 
 class TeamSectionView: BaseView {
     
+    enum Measures {
+        
+        static let verticalOffset = 10
+        static let leadingOffset = 16
+        static let cellSpacing = 4
+        static let logoTextSpacing = 8
+        static let logoWidth = 16
+    }
+    
     let mainCell: UIView = UIView()
     let homeTeamCell: UIView = UIView()
     let homeTeamName: UILabel = UILabel()
@@ -40,15 +49,6 @@ class TeamSectionView: BaseView {
         awayTeamName.numberOfLines = 1
         homeTeamLogo.contentMode = .scaleAspectFit
         awayTeamLogo.contentMode = .scaleAspectFit
-    }
-    
-    enum Measures {
-        
-        static let verticalOffset = 10
-        static let leadingOffset = 16
-        static let cellSpacing = 4
-        static let logoTextSpacing = 8
-        static let logoWidth = 16
     }
     
     override func setupConstraints(){
@@ -98,6 +98,6 @@ class TeamSectionView: BaseView {
         homeTeamName.text = homeTeam.name
         awayTeamLogo.sd_setImage(with: URL(string: awayTeam.logoUrl!))
         awayTeamName.text = awayTeam.name
-        (homeTeamName.textColor, awayTeamName.textColor) = teamColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status)
+        (homeTeamName.textColor, awayTeamName.textColor) = Helper.teamColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status)
     }
 }

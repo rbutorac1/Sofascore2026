@@ -19,7 +19,12 @@ extension Helper {
         var homeColor: UIColor
         var awayColor: UIColor
         
-        let score = homeGoals! - awayGoals!
+        guard let homeGoals,
+              let awayGoals else {
+            return (nil, nil)
+        }
+        
+        let score = homeGoals - awayGoals
         if score > 0 {
             homeColor = Colors.teamWinColor
             awayColor = Colors.teamLossColor
@@ -40,10 +45,15 @@ extension Helper {
         var homeColor: UIColor = Colors.teamColor
         var awayColor: UIColor = Colors.teamColor
         
-        if status != EventStatus.finished { return (homeColor, awayColor) }
-        
-        else {
-            let score = homeGoals! - awayGoals!
+        if status != EventStatus.finished {
+            return (homeColor, awayColor)
+        } else {
+            guard let homeGoals,
+                  let awayGoals else {
+                return (Colors.teamColor, Colors.teamColor)
+            }
+            
+            let score = homeGoals - awayGoals
             if score > 0 {
                 homeColor = Colors.teamWinColor
                 awayColor = Colors.teamLossColor
@@ -73,10 +83,8 @@ extension Helper {
         var homeString: String =  ""
         var awayString: String =  ""
         
-        guard let homeGoals = homeGoals else {
-            return (homeString, awayString)
-        }
-        guard let awayGoals = awayGoals else {
+        guard let homeGoals,
+              let awayGoals else {
             return (homeString, awayString)
         }
         

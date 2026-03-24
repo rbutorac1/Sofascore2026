@@ -19,8 +19,6 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        
         matchViews = data.events.map { _ in MatchView() }
         
         addViews()
@@ -37,6 +35,8 @@ class ViewController: UIViewController {
     }
     
     func styleViews(){
+        view.backgroundColor = .white
+
         leagueView.leagueInfo(with: data.laLiga)
         
         for i in 0..<matchViews.count{

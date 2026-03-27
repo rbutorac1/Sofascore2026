@@ -11,17 +11,18 @@ import SnapKit
 
 class MatchTableView: BaseView {
     
+    enum Measures {
+        
+        static let rowHeight = 56
+        static let headerHeight = 56
+        static let footerHeight = 8
+    }
+    
     let tableView: UITableView = UITableView(frame: .zero, style: .plain)
     var data: Hw3Data = Hw3Data()
     
     override func addViews(){
         addSubview(tableView)
-    }
-    
-    enum Measures {
-        
-        static let rowHeight = 56
-        static let headerHeight = 56
     }
     
     override func styleViews(){
@@ -32,6 +33,7 @@ class MatchTableView: BaseView {
         
         tableView.rowHeight = CGFloat(Measures.rowHeight)
         tableView.register(MatchTableViewCell.self, forCellReuseIdentifier: "MatchCell")
+        tableView.register(LeagueHeaderView.self, forHeaderFooterViewReuseIdentifier: "LeagueHeader")
         
         tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
@@ -43,40 +45,27 @@ class MatchTableView: BaseView {
             make.edges.equalToSuperview()
         }
     }
-    
-    var laLigaEvents: [Event] {
-        data.events.filter { $0.league!.name == "La Liga"}
-    }
-    
-    var premierLeagueEvents: [Event] {
-        data.events.filter { $0.league!.name == "Premier League" }
-    }
 }
 
 extension MatchTableView: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return data.leagues.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return laLigaEvents.count
-        }
-        else {
-            return premierLeagueEvents.count
-        }
+        let league = data.leagues[section]
+        return data.eventsDict[league]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MatchCell", for: indexPath) as! MatchTableViewCell
-        
-        let event: Event
-        
-        if indexPath.section == 0 {
-            event = laLigaEvents[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MatchCell", for: indexPath) as? MatchTableViewCell else {
+            return UITableViewCell()
         }
-        else {
-            event = premierLeagueEvents[indexPath.row]
+        
+        let league = data.leagues[indexPath.section]
+        
+        guard let event = data.eventsDict[league]?[indexPath.row] else {
+            return cell
         }
         
         cell.matchView.matchInfo(with: event)
@@ -86,25 +75,38 @@ extension MatchTableView: UITableViewDataSource {
 }
 
 extension MatchTableView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForFooterInSection: Int) -> UIView? {
-        let divider: SectionDividerView = SectionDividerView()
-        return divider
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat(Measures.headerHeight)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = LeagueView()
-
-        if section == 0 {
-            header.leagueInfo(with: data.laLiga)
-        }
-        else {
-            header.leagueInfo(with: data.premierLeague)
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "LeagueHeader") as? LeagueHeaderView else {
+            return UIView()
         }
         
+        let leagueName = data.leagues[section]
+        let event = data.eventsDict[leagueName]?.first
+        
+        guard let league = event?.league else{
+            return header
+        }
+        
+        header.leagueView.leagueInfo(with: league)
+        
         return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let lastSection = tableView.numberOfSections - 1
+        if section == lastSection { return 0 }
+        
+        return CGFloat(Measures.footerHeight)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let lastSection = tableView.numberOfSections - 1
+        if section == lastSection { return nil }
+        
+        return SectionDividerView()
     }
 }

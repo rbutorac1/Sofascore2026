@@ -10,20 +10,17 @@ import SofaAcademic
 
 public class Hw3Data {
     
-    let premierLeague = League(
-        id: 2,
-        name: "Premier League",
-        country: Country(id: 2, name: "England"),
-        logoUrl: "https://img.sofascore.com/api/v1/unique-tournament/17/image"
-    )
-    
-    var laLiga: League {
-        let data = Homework2DataSource()
-        return data.laLigaLeague()
-    }
-    
     var events: [Event] {
         let data = Homework3DataSource()
         return data.events()
     }
+        
+    var eventsDict: [String: [Event]] {
+        Dictionary(grouping: events) { $0.league?.name ?? "No league"}
+    }
+    
+    var leagues: [String] {
+        eventsDict.keys.sorted()
+    }
 }
+

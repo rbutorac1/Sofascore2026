@@ -15,14 +15,21 @@ class MatchTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        addSubview(matchView)
-        
-        matchView.snp.makeConstraints{ make in
-            make.edges.equalToSuperview()
-        }
+        addViews()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) error")
+    }
+    
+    func addViews(){
+        addSubview(matchView)
+    }
+    
+    func setupConstraints(){
+        matchView.snp.makeConstraints{ make in
+            make.edges.equalToSuperview()
+        }
     }
 }

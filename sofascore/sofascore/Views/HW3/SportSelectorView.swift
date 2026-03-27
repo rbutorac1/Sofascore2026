@@ -11,6 +11,15 @@ import SofaAcademic
 
 class SportSelectorView: BaseView {
     
+    enum Measures {
+        
+        static let stackViewHeight = 48
+        static let stackViewSpacing = 4
+        static let indicatorOffset = 8
+        static let indicatorHeight = 4
+        static let indicatorWidth = 104
+    }
+    
     let stackView: UIStackView = UIStackView()
     let indicatorView: UIImageView = UIImageView()
     
@@ -43,23 +52,10 @@ class SportSelectorView: BaseView {
             .layerMinXMinYCorner,
             .layerMaxXMinYCorner
         ]
+        
         indicatorView.clipsToBounds = true
         
-        football.sportInfo(name: "Football", icon: Images.footballIcon)
-        football.delegate = self
-        basketball.sportInfo(name: "Basketball", icon: Images.basketballIcon)
-        basketball.delegate = self
-        amFootball.sportInfo(name: "Am. Football", icon: Images.amFootballIcon)
-        amFootball.delegate = self
-    }
-    
-    enum Measures {
-        
-        static let stackViewHeight = 48
-        static let stackViewSpacing = 4
-        static let indicatorOffset = 8
-        static let indicatorHeight = 4
-        static let indicatorWidth = 104
+        addSports()
     }
     
     override func setupConstraints(){
@@ -78,11 +74,24 @@ class SportSelectorView: BaseView {
         }
     }
     
+    func addSports(){
+        football.sportInfo(name: "Football", icon: Images.footballIcon)
+        football.delegate = self
+        basketball.sportInfo(name: "Basketball", icon: Images.basketballIcon)
+        basketball.delegate = self
+        amFootball.sportInfo(name: "Am. Football", icon: Images.amFootballIcon)
+        amFootball.delegate = self
+    }
+    
     func moveIndicator(to view: UIView){
         indicatorLeadingConstraint?.deactivate()
         
         indicatorView.snp.makeConstraints{ make in
             indicatorLeadingConstraint = make.centerX.equalTo(view.snp.centerX).constraint
+        }
+        
+        UIView.animate(withDuration: 0.3){
+            self.layoutIfNeeded()
         }
     }
 }

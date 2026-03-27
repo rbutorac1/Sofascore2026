@@ -11,63 +11,43 @@ import SofaAcademic
 
 class ViewController: UIViewController {
     
-    let leagueView: LeagueView = LeagueView()
-    var matchViews: [MatchView] = []
-    let data: Hw2Data = Hw2Data()
+    enum Measures {
+        
+        static let selectorHeight = 48
+    }
+    
+    let selectorView: SportSelectorView = SportSelectorView()
+    let tableView: MatchTableView = MatchTableView()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        matchViews = data.events.map { _ in MatchView() }
-        
+                    
         addViews()
         styleViews()
-        setUpConstraints()
+        setupConstraints()
     }
     
     func addViews(){
-        view.addSubview(leagueView)
-        
-        for matchView in matchViews {
-            view.addSubview(matchView)
-        }
+        view.addSubview(selectorView)
+        view.addSubview(tableView)
     }
     
-    func styleViews(){
-        view.backgroundColor = .white
 
-        leagueView.leagueInfo(with: data.laLiga)
-        
-        for i in 0..<matchViews.count{
-            matchViews[i].matchInfo(with: data.events[i])
-        }
+    func styleViews(){
+        view.backgroundColor = Colors.sportSelectorBackgroundColor
     }
     
-    func setUpConstraints(){
-        leagueView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(192)
+    func setupConstraints(){
+        selectorView.snp.makeConstraints{ make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
+            make.height.equalTo(Measures.selectorHeight)
         }
         
-        matchViews[0].snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(248)
-            make.leading.trailing.equalToSuperview()
-        }
-        
-        matchViews[1].snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(304)
-            make.leading.trailing.equalToSuperview()
-        }
-        
-        matchViews[2].snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(360)
-            make.leading.trailing.equalToSuperview()
-        }
-        
-        matchViews[3].snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(416)
-            make.leading.trailing.equalToSuperview()
+        tableView.snp.makeConstraints{ make in
+            make.top.equalTo(selectorView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
 }

@@ -11,63 +11,89 @@ import SofaAcademic
 
 class ViewController: UIViewController {
     
-    let leagueView: LeagueView = LeagueView()
-    var matchViews: [MatchView] = []
-    let data: Hw2Data = Hw2Data()
+    enum Measures {
+        
+        static let selectorHeight = 48
+        static let headerHeight = 48
+    }
+    
+    let headerView: HeaderView = HeaderView()
+    let selectorView: SportSelectorView = SportSelectorView()
+    let tableView: MatchTableView = MatchTableView()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        matchViews = data.events.map { _ in MatchView() }
-        
+                    
         addViews()
         styleViews()
-        setUpConstraints()
+        setupConstraints()
+        settingsButton()
+        eventButton()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     func addViews(){
-        view.addSubview(leagueView)
-        
-        for matchView in matchViews {
-            view.addSubview(matchView)
-        }
+        view.addSubview(headerView)
+        view.addSubview(selectorView)
+        view.addSubview(tableView)
     }
     
-    func styleViews(){
-        view.backgroundColor = .white
 
-        leagueView.leagueInfo(with: data.laLiga)
+    func styleViews(){
+        view.backgroundColor = Colors.sportSelectorBackgroundColor
+    }
+    
+    func setupConstraints(){
+        headerView.snp.makeConstraints{ make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(Measures.headerHeight)
+        }
         
-        for i in 0..<matchViews.count{
-            matchViews[i].matchInfo(with: data.events[i])
+        selectorView.snp.makeConstraints{ make in
+            make.top.equalTo(headerView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(Measures.selectorHeight)
+        }
+        
+        tableView.snp.makeConstraints{ make in
+            make.top.equalTo(selectorView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
     
-    func setUpConstraints(){
-        leagueView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(192)
-            make.leading.trailing.equalToSuperview()
+    func settingsButton(){
+        headerView.settingsTap = { [weak self] in
+            guard let self = self else { return }
+            
+            let settingsVC = SettingsViewController()
+            let navigation = UINavigationController(rootViewController: settingsVC)
+            
+            navigation.modalPresentationStyle = .fullScreen
+            present(navigation, animated: true)
         }
-        
-        matchViews[0].snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(248)
-            make.leading.trailing.equalToSuperview()
-        }
-        
-        matchViews[1].snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(304)
-            make.leading.trailing.equalToSuperview()
-        }
-        
-        matchViews[2].snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(360)
-            make.leading.trailing.equalToSuperview()
-        }
-        
-        matchViews[3].snp.makeConstraints{ make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(416)
-            make.leading.trailing.equalToSuperview()
+    }
+    
+    func eventButton(){
+        tableView.cellTap = { [weak self] indexPath in
+            guard let self = self else { return }
+            
+            let eventVC = EventDetailsViewController()
+            
+            let league = tableView.data.leagues[indexPath.section]
+            guard let selectedEvent = tableView.data.eventsDict[league]?[indexPath.row] else {
+                return
+            }
+            
+            eventVC.event = selectedEvent
+            
+            navigationController?.pushViewController(eventVC, animated: true)
         }
     }
 }

@@ -16,4 +16,8 @@ enum Images {
     static let footballIcon: UIImage? = UIImage(named: "icon_football")
     static let basketballIcon: UIImage? = UIImage(named: "icon_basketball")
     static let amFootballIcon: UIImage? = UIImage(named: "icon_american_football")
+    static let settingsIcon: UIImage? = UIImage(named: "settings_icon")
+    static let trophyIcon: UIImage? = UIImage(named: "trophy_icon")
+    static let sofa: UIImage? = UIImage(named: "sofascore_lockup")
+    static let arrowBack: UIImage? = UIImage(named: "arrow_back")
 }

@@ -20,6 +20,7 @@ class MatchTableView: BaseView {
     
     let tableView: UITableView = UITableView(frame: .zero, style: .plain)
     var data: Hw3Data = Hw3Data()
+    var cellTap: ((IndexPath) -> Void)?
     
     override init(){
         super.init()
@@ -116,4 +117,9 @@ extension MatchTableView: UITableViewDelegate {
         
         return SectionDividerView()
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        cellTap?(indexPath)
+    }
 }
+

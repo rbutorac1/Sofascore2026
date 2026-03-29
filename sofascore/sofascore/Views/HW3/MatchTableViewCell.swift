@@ -14,7 +14,7 @@ class MatchTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+                
         addViews()
         setupConstraints()
     }
@@ -24,7 +24,7 @@ class MatchTableViewCell: UITableViewCell {
     }
     
     func addViews(){
-        addSubview(matchView)
+        contentView.addSubview(matchView)
     }
     
     func setupConstraints(){

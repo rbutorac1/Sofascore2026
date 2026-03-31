@@ -25,7 +25,7 @@ class LeagueHeaderView: UITableViewHeaderFooterView {
     }
     
     func addViews(){
-        addSubview(leagueView)
+        contentView.addSubview(leagueView)
     }
     
     func setupConstraints(){

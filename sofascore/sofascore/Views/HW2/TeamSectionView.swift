@@ -53,7 +53,6 @@ class TeamSectionView: BaseView {
     
     override func setupConstraints(){
         mainCell.snp.makeConstraints{ make in
-            make.top.bottom.equalToSuperview()
             make.edges.equalToSuperview()
         }
         
@@ -94,9 +93,14 @@ class TeamSectionView: BaseView {
     }
     
     func teamsInfo(homeTeam: Team, awayTeam: Team, homeGoals: Int?, awayGoals: Int?, status: EventStatus){
-        homeTeamLogo.sd_setImage(with: URL(string: homeTeam.logoUrl!))
+        guard let homeUrl = homeTeam.logoUrl,
+              let awayUrl = awayTeam.logoUrl else {
+                return
+        }
+        
+        homeTeamLogo.sd_setImage(with: URL(string: homeUrl))
         homeTeamName.text = homeTeam.name
-        awayTeamLogo.sd_setImage(with: URL(string: awayTeam.logoUrl!))
+        awayTeamLogo.sd_setImage(with: URL(string: awayUrl))
         awayTeamName.text = awayTeam.name
         (homeTeamName.textColor, awayTeamName.textColor) = Helper.teamColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status)
     }

@@ -75,18 +75,28 @@ class SportSelectorView: BaseView {
     }
     
     func addSports(){
-        football.sportInfo(name: "Football", icon: Images.footballIcon)
+        guard let footballIcon = Images.footballIcon,
+              let basketballIcon = Images.basketballIcon,
+              let amFootballIcon = Images.footballIcon else {
+                return
+        }
+        
+        football.sportInfo(name: "Football", icon: footballIcon)
         football.delegate = self
-        basketball.sportInfo(name: "Basketball", icon: Images.basketballIcon)
+        basketball.sportInfo(name: "Basketball", icon: basketballIcon)
         basketball.delegate = self
-        amFootball.sportInfo(name: "Am. Football", icon: Images.amFootballIcon)
+        amFootball.sportInfo(name: "Am. Football", icon: amFootballIcon)
         amFootball.delegate = self
     }
     
     func moveIndicator(to view: UIView){
         indicatorLeadingConstraint?.deactivate()
         
-        indicatorView.snp.makeConstraints{ make in
+        indicatorView.snp.remakeConstraints{ make in
+            make.bottom.equalTo(stackView.snp.bottom)
+            make.height.equalTo(Measures.indicatorHeight)
+            make.width.equalTo(Measures.indicatorWidth)
+            
             indicatorLeadingConstraint = make.centerX.equalTo(view.snp.centerX).constraint
         }
         

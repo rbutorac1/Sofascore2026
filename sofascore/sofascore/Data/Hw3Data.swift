@@ -10,17 +10,22 @@ import SofaAcademic
 
 public class Hw3Data {
     
-    var events: [Event] {
-        let data = Homework3DataSource()
-        return data.events()
-    }
-        
-    var eventsDict: [String: [Event]] {
-        Dictionary(grouping: events) { $0.league?.name ?? "No league"}
-    }
+    let events: [Event]
+    let eventsDict: [String: [Event]]
+    let leagues: [String]
     
-    var leagues: [String] {
-        eventsDict.keys.sorted()
+    init(){
+        let dataSource = Homework3DataSource()
+        let events = dataSource.events()
+        
+        self.events = events
+        
+        let dictionary = Dictionary(grouping: events) {
+            $0.league?.name ?? "No league"
+        }
+        self.eventsDict = dictionary
+        
+        self.leagues = eventsDict.keys.sorted()
     }
 }
 

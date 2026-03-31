@@ -24,7 +24,7 @@ class MatchTableViewCell: UITableViewCell {
     }
     
     func addViews(){
-        addSubview(matchView)
+        contentView.addSubview(matchView)
     }
     
     func setupConstraints(){

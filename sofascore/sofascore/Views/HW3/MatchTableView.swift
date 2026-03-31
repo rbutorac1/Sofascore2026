@@ -21,6 +21,16 @@ class MatchTableView: BaseView {
     let tableView: UITableView = UITableView(frame: .zero, style: .plain)
     var data: Hw3Data = Hw3Data()
     
+    override init(){
+        super.init()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.register(MatchTableViewCell.self, forCellReuseIdentifier: "MatchCell")
+        tableView.register(LeagueHeaderView.self, forHeaderFooterViewReuseIdentifier: "LeagueHeader")
+    }
+    
     override func addViews(){
         addSubview(tableView)
     }
@@ -28,16 +38,9 @@ class MatchTableView: BaseView {
     override func styleViews(){
         tableView.backgroundColor = Colors.defaultBackgroundColor
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        tableView.rowHeight = CGFloat(Measures.rowHeight)
-        tableView.register(MatchTableViewCell.self, forCellReuseIdentifier: "MatchCell")
-        tableView.register(LeagueHeaderView.self, forHeaderFooterViewReuseIdentifier: "LeagueHeader")
-        
         tableView.sectionHeaderTopPadding = 0
         tableView.separatorStyle = .none
-        
+        tableView.rowHeight = CGFloat(Measures.rowHeight)
     }
     
     override func setupConstraints(){
@@ -98,14 +101,18 @@ extension MatchTableView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let lastSection = tableView.numberOfSections - 1
-        if section == lastSection { return 0 }
+        if section == lastSection {
+            return 0
+        }
         
         return CGFloat(Measures.footerHeight)
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let lastSection = tableView.numberOfSections - 1
-        if section == lastSection { return nil }
+        if section == lastSection {
+            return nil
+        }
         
         return SectionDividerView()
     }

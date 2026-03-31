@@ -31,7 +31,7 @@ extension Helper {
         }
         else if score < 0 {
             homeColor = Colors.teamLossColor
-            awayColor = Colors.teamLossColor
+            awayColor = Colors.teamWinColor
         }
         else {
             homeColor = Colors.teamDrawColor
@@ -79,6 +79,8 @@ extension Helper {
 
 // Text
 extension Helper {
+    static let format = DateFormatter()
+
     static func goalsString(homeGoals: Int?, awayGoals: Int?) -> (String, String) {
         var homeString: String =  ""
         var awayString: String =  ""
@@ -119,7 +121,6 @@ extension Helper {
     static func matchStart(startTimestamp: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(startTimestamp))
         
-        let format = DateFormatter()
         format.dateFormat = "HH:mm"
         
         let start = format.string(from: date)

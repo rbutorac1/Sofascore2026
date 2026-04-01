@@ -93,15 +93,16 @@ class TeamSectionView: BaseView {
     }
     
     func teamsInfo(homeTeam: Team, awayTeam: Team, homeGoals: Int?, awayGoals: Int?, status: EventStatus){
-        guard let homeUrl = homeTeam.logoUrl,
-              let awayUrl = awayTeam.logoUrl else {
-                return
-        }
-        
-        homeTeamLogo.sd_setImage(with: URL(string: homeUrl))
         homeTeamName.text = homeTeam.name
-        awayTeamLogo.sd_setImage(with: URL(string: awayUrl))
         awayTeamName.text = awayTeam.name
         (homeTeamName.textColor, awayTeamName.textColor) = Helper.teamColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status)
+        
+        if let homeUrl = homeTeam.logoUrl {
+            homeTeamLogo.sd_setImage(with: URL(string: homeUrl))
+        }
+        
+        if let awayUrl = awayTeam.logoUrl {
+            awayTeamLogo.sd_setImage(with: URL(string: awayUrl))
+        }
     }
 }

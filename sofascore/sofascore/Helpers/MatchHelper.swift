@@ -79,7 +79,7 @@ extension Helper {
 
 // Text
 extension Helper {
-    static let format = DateFormatter()
+    static let format: DateFormatter = DateFormatter()
 
     static func goalsString(homeGoals: Int?, awayGoals: Int?) -> (String, String) {
         var homeString: String =  ""

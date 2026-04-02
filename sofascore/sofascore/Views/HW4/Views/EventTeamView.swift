@@ -58,11 +58,10 @@ class EventTeamView: BaseView {
     }
     
     func teamInfo(team: Team){
-        guard let url = team.logoUrl else {
-            return
-        }
-        
-        teamLogo.sd_setImage(with: URL(string: url))
         teamName.text = team.name
+        
+        if let url = team.logoUrl {
+            teamLogo.sd_setImage(with: URL(string: url))
+        }
     }
 }

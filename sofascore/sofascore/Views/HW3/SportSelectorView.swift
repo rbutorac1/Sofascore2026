@@ -75,18 +75,20 @@ class SportSelectorView: BaseView {
     }
     
     func addSports(){
-        guard let footballIcon = Images.footballIcon,
-              let basketballIcon = Images.basketballIcon,
-              let amFootballIcon = Images.footballIcon else {
-                return
+        if let footballIcon = Images.footballIcon {
+            football.sportInfo(name: "Football", icon: footballIcon)
+            football.delegate = self
         }
         
-        football.sportInfo(name: "Football", icon: footballIcon)
-        football.delegate = self
-        basketball.sportInfo(name: "Basketball", icon: basketballIcon)
-        basketball.delegate = self
-        amFootball.sportInfo(name: "Am. Football", icon: amFootballIcon)
-        amFootball.delegate = self
+        if let basketballIcon = Images.basketballIcon {
+            basketball.sportInfo(name: "Basketball", icon: basketballIcon)
+            basketball.delegate = self
+        }
+        
+        if let amFootballIcon = Images.amFootballIcon {
+            amFootball.sportInfo(name: "Am. Football", icon: amFootballIcon)
+            amFootball.delegate = self
+        }
     }
     
     func moveIndicator(to view: UIView){

@@ -83,12 +83,12 @@ class EventLeagueView: BaseView {
     }
     
     func leagueInfo(league: League){
+        leagueText.text = (league.country?.name ?? "Unknown country") + ", " + (league.name)
+        
         guard let url = league.logoUrl else{
             return
         }
-        
         leagueLogo.sd_setImage(with: URL(string: url))
-        leagueText.text = (league.country?.name ?? "Unknown country") + ", " + (league.name)
     }
     
     override func setupGestureRecognizers(){

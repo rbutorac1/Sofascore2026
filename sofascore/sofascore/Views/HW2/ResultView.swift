@@ -57,7 +57,9 @@ class ResultView: BaseView {
     }
     
     func resultInfo(homeGoals: Int?, awayGoals: Int?, status: EventStatus){
-        (homeTeamGoals.text, awayTeamGoals.text) = Helper.goalsString(homeGoals: homeGoals, awayGoals: awayGoals)
-        (homeTeamGoals.textColor, awayTeamGoals.textColor) = Helper.goalsColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status)
+        homeTeamGoals.text = Helper.goalsString(goals: homeGoals)
+        awayTeamGoals.text = Helper.goalsString(goals: awayGoals)
+        homeTeamGoals.textColor = Helper.goalsColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status, isHome: true)
+        awayTeamGoals.textColor = Helper.goalsColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status, isHome: false)
     }
 }

@@ -122,4 +122,3 @@ extension MatchTableView: UITableViewDelegate {
         cellTap?(indexPath)
     }
 }
-

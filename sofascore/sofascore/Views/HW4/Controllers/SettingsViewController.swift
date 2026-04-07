@@ -11,40 +11,59 @@ import SofaAcademic
 
 class SettingsViewController: UIViewController {
     
-    let appearance: UINavigationBarAppearance = UINavigationBarAppearance()
+    enum Measures {
+        
+        static let headerHeight = 48
+    }
     
+    let header: settingsHeaderView = settingsHeaderView()
+    let safeAreaView: UIView = UIView()
+        
     override func viewDidLoad(){
         super.viewDidLoad()
         
+        addViews()
         styleViews()
-        safeAreaColor()
+        setupConstraints()
+        setupBindings()
+    }
+    
+    override func viewWillAppear(_ animated: Bool){
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool){
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    func addViews(){
+        view.addSubview(header)
+        view.addSubview(safeAreaView)
     }
     
     func styleViews(){
         view.backgroundColor = Colors.defaultBackgroundColor
-        
-        title = "Settings"
-        
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Dismiss",
-            style: .plain,
-            target: self,
-            action: #selector(closeTapped)
-        )
+        safeAreaView.backgroundColor = Colors.safeAreaColor
     }
     
-    func safeAreaColor(){
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = Colors.sportSelectorBackgroundColor
-        appearance.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: Colors.defaultBackgroundColor
-        ]
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
-    }
+    func setupConstraints(){
+        safeAreaView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(view.safeAreaInsets)
+            make.bottom.equalTo(header.snp.top)
+        }
         
-    @objc func closeTapped(){
-        dismiss(animated: true)
+        header.snp.makeConstraints{ make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(Measures.headerHeight)
+        }
+    }
+    
+    func setupBindings(){
+        header.arrowTap = { [weak self] in
+            self?.dismiss(animated: true)
+        }
     }
 }

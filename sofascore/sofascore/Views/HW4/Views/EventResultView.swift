@@ -87,8 +87,10 @@ class EventResultView: BaseView {
     }
     
     func resultInfo(homeGoals: Int?, awayGoals: Int?, timestamp: Int, status: EventStatus){
-        (home.text, away.text) = Helper.goalsString(homeGoals: homeGoals, awayGoals: awayGoals)
-        (home.textColor, away.textColor) = Helper.goalsColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status)
+        home.text = Helper.goalsString(goals: homeGoals)
+        away.text = Helper.goalsString(goals: awayGoals)
+        home.textColor = Helper.goalsColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status, isHome: true)
+        away.textColor = Helper.goalsColor(homeGoals: homeGoals, awayGoals: awayGoals, status: status, isHome: false)
         
         if status == EventStatus.finished {
             minute.text = "Full Time"
@@ -99,6 +101,5 @@ class EventResultView: BaseView {
             minute.textColor = Helper.minuteColor(status: status)
             dash.textColor = Colors.liveColor
         }
-        
     }
 }

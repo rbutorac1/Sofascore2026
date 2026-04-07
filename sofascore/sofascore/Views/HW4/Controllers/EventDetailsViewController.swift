@@ -27,7 +27,7 @@ class EventDetailsViewController: UIViewController {
         styleViews()
         setupConstraints()
         configureView()
-        backToVC()
+        setupBindings()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,17 +53,15 @@ class EventDetailsViewController: UIViewController {
     }
     
     func configureView(){
-        guard let event = event else {
-            return
-        }
-        guard let league = event.league else {
+        guard let event = event,
+              let league = event.league else {
             return
         }
         
         eventView.eventInfo(event: event, league: league)
     }
     
-    func backToVC(){
+    func setupBindings(){
         eventView.eventLeague.arrowTap = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }

@@ -15,9 +15,9 @@ class EventLeagueView: BaseView {
     enum Measures {
         
         static let cellHeight = 48
-        static let arrowSize = 16
-        static let arrowTopBottom = 16
-        static let arrowLeading = 20
+        static let arrowSize = 24
+        static let arrowTopBottom = 12
+        static let arrowLeading = 16
         static let textCellTopBottom = 16
         static let textCellArrowDistance = 24
         static let textCellTrailing = 16

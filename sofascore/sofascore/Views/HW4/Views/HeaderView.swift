@@ -25,12 +25,12 @@ class HeaderView: BaseView{
         static let sofascoreHeight = 20
     }
     
-    let mainCell: UIView = UIView()
-    let settingsArea: UIView = UIView()
-    let settingsIcon: UIImageView = UIImageView()
-    let trophyArea: UIView = UIView()
-    let trophyIcon: UIImageView = UIImageView()
-    let sofascore: UIImageView = UIImageView()
+    private let mainCell: UIView = UIView()
+    private let settingsArea: UIView = UIView()
+    private let settingsIcon: UIImageView = UIImageView()
+    private let trophyArea: UIView = UIView()
+    private let trophyIcon: UIImageView = UIImageView()
+    private let sofascore: UIImageView = UIImageView()
     
     var settingsTap: (() -> Void)?
     

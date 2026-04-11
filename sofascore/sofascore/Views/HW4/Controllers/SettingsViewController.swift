@@ -16,7 +16,7 @@ class SettingsViewController: UIViewController {
         static let headerHeight = 48
     }
     
-    let header: settingsHeaderView = settingsHeaderView()
+    let header: SettingsHeaderView = SettingsHeaderView()
     let safeAreaView: UIView = UIView()
         
     override func viewDidLoad(){

@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import SofaAcademic
 
-class settingsHeaderView: BaseView {
+class SettingsHeaderView: BaseView {
     
     enum Measures {
         
@@ -21,10 +21,10 @@ class settingsHeaderView: BaseView {
         static let textInset = 16
     }
     
-    let mainCell: UIView = UIView()
-    let iconBox: UIView = UIView()
-    let arrowIcon: UIImageView = UIImageView()
-    let title: UILabel = UILabel()
+    private let mainCell: UIView = UIView()
+    private let iconBox: UIView = UIView()
+    private let arrowIcon: UIImageView = UIImageView()
+    private let title: UILabel = UILabel()
     
     var arrowTap: (() -> Void)?
     

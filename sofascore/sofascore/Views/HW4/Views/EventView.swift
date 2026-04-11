@@ -23,12 +23,12 @@ class EventView: BaseView {
         static let startBottom = 52
     }
     
-    let mainCell: UIView = UIView()
+    private let mainCell: UIView = UIView()
+    private let homeTeam: EventTeamView = EventTeamView()
+    private let awayTeam: EventTeamView = EventTeamView()
+    private let result: EventResultView = EventResultView()
+    private let start: EventStartView = EventStartView()
     let eventLeague: EventLeagueView = EventLeagueView()
-    let homeTeam: EventTeamView = EventTeamView()
-    let awayTeam: EventTeamView = EventTeamView()
-    let result: EventResultView = EventResultView()
-    let start: EventStartView = EventStartView()
     
     override func addViews(){
         addSubview(mainCell)

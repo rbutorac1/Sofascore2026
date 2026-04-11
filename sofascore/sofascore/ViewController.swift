@@ -17,9 +17,9 @@ class ViewController: UIViewController {
         static let headerHeight = 48
     }
     
-    let headerView: HeaderView = HeaderView()
-    let selectorView: SportSelectorView = SportSelectorView()
-    let tableView: MatchTableView = MatchTableView()
+    private let headerView: HeaderView = HeaderView()
+    private let selectorView: SportSelectorView = SportSelectorView()
+    private let tableView: MatchTableView = MatchTableView()
     
     override func viewDidLoad() {
         
@@ -73,10 +73,8 @@ class ViewController: UIViewController {
             guard let self = self else { return }
             
             let settingsVC = SettingsViewController()
-            let navigation = UINavigationController(rootViewController: settingsVC)
-            
-            navigation.modalPresentationStyle = .fullScreen
-            present(navigation, animated: true)
+            settingsVC.modalPresentationStyle = .fullScreen
+            present(settingsVC, animated: true)
         }
     }
     

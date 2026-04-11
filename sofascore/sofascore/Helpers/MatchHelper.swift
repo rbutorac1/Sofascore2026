@@ -12,16 +12,16 @@ enum Helper { }
 
 // Colors
 extension Helper {
-    static func goalsColor(homeGoals: Int?, awayGoals: Int?, status: EventStatus) -> (UIColor?, UIColor?) {
-        if status == EventStatus.notStarted { return (nil, nil) }
-        if (status == EventStatus.inProgress || status == EventStatus.halftime){ return (Colors.liveColor, Colors.liveColor) }
+    static func goalsColor(homeGoals: Int?, awayGoals: Int?, status: EventStatus, isHome: Bool) -> UIColor? {
+        if status == EventStatus.notStarted { return nil }
+        if (status == EventStatus.inProgress || status == EventStatus.halftime){ return Colors.liveColor }
         
         var homeColor: UIColor
         var awayColor: UIColor
         
         guard let homeGoals,
               let awayGoals else {
-            return (nil, nil)
+            return nil
         }
         
         let score = homeGoals - awayGoals
@@ -38,7 +38,11 @@ extension Helper {
             awayColor = Colors.teamDrawColor
         }
         
-        return (homeColor, awayColor)
+        if isHome {
+            return homeColor
+        } else {
+            return awayColor
+        }
     }
     
     static func teamColor(homeGoals: Int?, awayGoals: Int?, status: EventStatus) -> (UIColor, UIColor) {
@@ -81,19 +85,15 @@ extension Helper {
 extension Helper {
     static let format: DateFormatter = DateFormatter()
 
-    static func goalsString(homeGoals: Int?, awayGoals: Int?) -> (String, String) {
-        var homeString: String =  ""
-        var awayString: String =  ""
+    static func goalsString(goals: Int?) -> String {
+        var goalString: String =  ""
         
-        guard let homeGoals,
-              let awayGoals else {
-            return (homeString, awayString)
+        guard let goals = goals else {
+            return ""
         }
+        goalString = "\(goals)"
         
-        homeString = "\(homeGoals)"
-        awayString = "\(awayGoals)"
-        
-        return (homeString, awayString)
+        return goalString
     }
     
     static func minute(startTimestamp: Int, status: EventStatus) -> String {
@@ -119,12 +119,22 @@ extension Helper {
     }
     
     static func matchStart(startTimestamp: Int) -> String {
-        let date = Date(timeIntervalSince1970: TimeInterval(startTimestamp))
+        let date: Date = Date(timeIntervalSince1970: TimeInterval(startTimestamp))
         
         format.dateFormat = "HH:mm"
         
         let start = format.string(from: date)
         
         return "\(start)"
+    }
+    
+    static func matchDate(startTimeStamp: Int) -> String {
+        let date: Date = Date(timeIntervalSince1970: TimeInterval(startTimeStamp))
+
+        format.dateFormat = "dd.MM.yyyy"
+        
+        let matchDay: String = format.string(from: date)
+        
+        return "\(matchDay)"
     }
 }

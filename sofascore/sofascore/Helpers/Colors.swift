@@ -11,8 +11,10 @@ enum Colors {
     
     static let defaultBackgroundColor: UIColor = UIColor.white
     static let sportSelectorBackgroundColor: UIColor = .blue
+    static let safeAreaColor: UIColor = .blue
     
     static let matchStartColor: UIColor = UIColor.gray
+    static let leagueInfoColor: UIColor = UIColor.gray
     
     static let notLiveColor: UIColor = UIColor.gray
     static let liveColor: UIColor = UIColor.red

@@ -93,8 +93,14 @@ class LeagueView: BaseView {
     }
     
     func leagueInfo(with league: League){
-        leagueImage.sd_setImage(with: URL(string: league.logoUrl!))
-        countryName.text = league.country!.name
+        if let logoUrl = league.logoUrl {
+            leagueImage.sd_setImage(with: URL(string: logoUrl))
+        }
+        
+        if let country = league.country {
+            countryName.text = country.name
+        }
+        
         leagueName.text = league.name
     }
 }

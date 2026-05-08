@@ -1,0 +1,14 @@
+//
+//  EventStatus.swift
+//  sofascore
+//
+//  Created by akademija on 08.05.2026..
+//
+
+enum EventStatus: String, Codable{
+    
+    case notStarted = "NOT_STARTED"
+    case inProgress = "IN_PROGRESS"
+    case halftime = "HALF_TIME"
+    case finished = "FINISHED"
+}

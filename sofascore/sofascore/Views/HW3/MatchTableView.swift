@@ -19,7 +19,7 @@ class MatchTableView: BaseView {
     }
     
     let tableView: UITableView = UITableView(frame: .zero, style: .plain)
-    var data: Hw3Data = Hw3Data()
+    var data: EventsData = EventsData()
     var cellTap: ((IndexPath) -> Void)?
     
     override init(){

@@ -28,6 +28,8 @@ class SportView: BaseView {
     let sportNameCell: UILabel = UILabel()
     
     weak var delegate: SportViewDelegate?
+    var slug: String = ""
+    var sportName: String = ""
     
     override func addViews(){
         addSubview(mainCell)
@@ -74,6 +76,8 @@ class SportView: BaseView {
     }
     
     func sportInfo(name: String, icon: UIImage){
+        slug = name.lowercased().replacingOccurrences(of: ".", with: "").replacingOccurrences(of: " ", with: "-")
+        sportName = name
         sportNameCell.text = name
         iconCell.image = icon
     }

@@ -6,17 +6,16 @@
 //
 
 import UIKit
-import SofaAcademic
 
-public class Hw3Data {
+final class EventsData {
     
-    let events: [Event]
-    let eventsDict: [String: [Event]]
-    let leagues: [String]
+    var events: [Event] = []
+    var eventsDict: [String: [Event]] = [:]
+    var leagues: [String] = []
     
-    init(){
-        let dataSource = Homework3DataSource()
-        let events = dataSource.events()
+    func loadData(sport: String) async throws {
+        let events: [Event]
+        events = try await APIClient.shared.fetchEvent(sport: sport)
         
         self.events = events
         

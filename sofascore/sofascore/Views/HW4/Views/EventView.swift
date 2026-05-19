@@ -79,7 +79,7 @@ class EventView: BaseView {
         }
     }
     
-    func eventInfo(event: Event, league: League){
+    func eventInfo(event: Event, sport: String) {
         if event.status == EventStatus.notStarted {
             result.isHidden = true
             
@@ -90,7 +90,7 @@ class EventView: BaseView {
             result.resultInfo(homeGoals: event.homeScore, awayGoals: event.awayScore, timestamp: event.startTimestamp, status: event.status)
         }
      
-        eventLeague.leagueInfo(league: league)
+        eventLeague.leagueInfo(event: event, sport: sport)
         homeTeam.teamInfo(team: event.homeTeam)
         awayTeam.teamInfo(team: event.awayTeam)
     }

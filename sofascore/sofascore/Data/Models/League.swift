@@ -5,7 +5,7 @@
 //  Created by akademija on 08.05.2026..
 //
 
-struct League: Codable{
+struct League: Codable {
     let id: Int
     let name: String
     let country: Country?

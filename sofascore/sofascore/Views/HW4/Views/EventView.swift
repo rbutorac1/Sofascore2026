@@ -79,7 +79,7 @@ class EventView: BaseView {
         }
     }
     
-    func eventInfo(event: Event, sport: String){
+    func eventInfo(event: Event, sport: String) {
         if event.status == EventStatus.notStarted {
             result.isHidden = true
             

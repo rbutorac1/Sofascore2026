@@ -82,10 +82,10 @@ class EventLeagueView: BaseView {
         }
     }
     
-    func leagueInfo(event: Event, sport: String){
+    func leagueInfo(event: Event, sport: String) {
         leagueText.text = sport + ", " + (event.league?.country?.name ?? "Unknown country") + ", " + (event.league?.name ?? "Unknown league") + ", Round " + (String(event.round))
         
-        guard let url = event.league?.logoUrl else{
+        guard let url = event.league?.logoUrl else {
             return
         }
         leagueLogo.sd_setImage(with: URL(string: url))

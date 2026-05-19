@@ -33,24 +33,10 @@ class ViewController: UIViewController {
         settingsButton()
         eventButton()
         
-        Task{
-            do{
-                try await tableView.data.loadData(sport: "football")
-                tableView.tableView.reloadData()
-            } catch{
-                print(error)
-            }
-        }
+        fetchEvents(sportSlug: "football")
      
         selectorView.selectedSport = { [weak self] slug in
-            Task{
-                do{
-                    try await self?.tableView.data.loadData(sport: slug)
-                    self?.tableView.tableView.reloadData()
-                } catch{
-                    print(error)
-                }
-            }
+            self?.fetchEvents(sportSlug: slug)
         }
         
         selectorView.selectedSportName = { [weak self] name in
@@ -119,6 +105,21 @@ class ViewController: UIViewController {
             eventVC.sportName = sportName
             
             navigationController?.pushViewController(eventVC, animated: true)
+        }
+    }
+    
+    func fetchEvents(sportSlug: String){
+        Task{
+            do{
+                try await tableView.data.loadData(sport: sportSlug)
+                tableView.tableView.reloadData()
+                
+            } catch let error as APIError {
+                ErrorHandling.handleAPI(error: error)
+                
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }

@@ -7,11 +7,9 @@
 
 import Foundation
 
-final class APIClient{
+final class APIClient {
     static let shared = APIClient()
-    
-    private init(){}
-    
+        
     private let server = "https://sofascore-ios-academy-be-c63faa1a2212.herokuapp.com"
     
     func fetchEvent(sport: String) async throws -> [Event] {
@@ -19,44 +17,48 @@ final class APIClient{
         let requestUrl = server + endpoint
         
         guard let url = URL(string: requestUrl) else {
-            throw URLError(.badURL)
+            throw APIError.invalidURL
         }
         
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw URLError(.badServerResponse)
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw APIError.invalidResponse
+            }
+            print(httpResponse.statusCode)
+            
+            return try JSONDecoder().decode([Event].self, from: data)
+        } catch {
+            throw APIError.fetchingFailed
         }
-        print(httpResponse.statusCode)
-        
-        return try JSONDecoder().decode([Event].self, from: data)
     }
     
-    func fetchEventOld(sport: String, completition: @escaping (Result<[Event], Error>) -> Void){
+    func fetchEventOld(sport: String, completition: @escaping (Result<[Event], Error>) -> Void) {
         let endpoint = "/events?sport=\(sport)"
         let requestUrl = server + endpoint
         
         guard let url = URL(string: requestUrl) else {
-            return completition(.failure(URLError(.badURL)))
+            return completition(.failure(APIError.invalidURL))
         }
         
         URLSession.shared.dataTask(with: url){ data, response, error in
             guard let httpResponse = response as? HTTPURLResponse else {
-                completition(.failure(URLError(.badServerResponse)))
+                completition(.failure(APIError.invalidResponse))
                 return
             }
             print(httpResponse.statusCode)
             
             guard let data = data else{
-                completition(.failure(URLError(.badServerResponse)))
+                completition(.failure(APIError.invalidResponse))
                 return
             }
             
-            do{
+            do {
                 let events = try JSONDecoder().decode([Event].self, from: data)
                 completition(.success(events))
             } catch{
-                completition(.failure(error))
+                completition(.failure(APIError.fetchingFailed))
             }
         }.resume()
     }

@@ -52,7 +52,7 @@ class EventDetailsViewController: UIViewController {
         }
     }
     
-    func configureView(){
+    func configureView() {
         guard let event = event else {
             return
         }

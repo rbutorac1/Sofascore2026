@@ -13,7 +13,7 @@ final class EventsData {
     var eventsDict: [String: [Event]] = [:]
     var leagues: [String] = []
     
-    func loadData(sport: String) async throws{
+    func loadData(sport: String) async throws {
         let events: [Event]
         events = try await APIClient.shared.fetchEvent(sport: sport)
         

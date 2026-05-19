@@ -5,7 +5,7 @@
 //  Created by akademija on 08.05.2026..
 //
 
-struct Event: Codable{
+struct Event: Codable {
     let id: Int
     let homeTeam: Team
     let awayTeam: Team

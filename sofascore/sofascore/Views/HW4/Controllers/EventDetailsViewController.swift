@@ -18,7 +18,7 @@ class EventDetailsViewController: UIViewController {
     
     let eventView: EventView = EventView()
     var event: Event?
-    var league: League?
+    var sportName: String = ""
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -52,13 +52,12 @@ class EventDetailsViewController: UIViewController {
         }
     }
     
-    func configureView(){
-        guard let event = event,
-              let league = event.league else {
+    func configureView() {
+        guard let event = event else {
             return
         }
         
-        eventView.eventInfo(event: event, league: league)
+        eventView.eventInfo(event: event, sport: sportName)
     }
     
     func setupBindings(){

@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     private let selectorView: SportSelectorView = SportSelectorView()
     private let tableView: MatchTableView = MatchTableView()
     
+    private var sportName: String = "Football"
+        
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -30,6 +32,16 @@ class ViewController: UIViewController {
         setupConstraints()
         settingsButton()
         eventButton()
+        
+        fetchEvents(sportSlug: "football")
+     
+        selectorView.selectedSport = { [weak self] slug in
+            self?.fetchEvents(sportSlug: slug)
+        }
+        
+        selectorView.selectedSportName = { [weak self] name in
+            self?.sportName = name
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,8 +102,24 @@ class ViewController: UIViewController {
             }
             
             eventVC.event = selectedEvent
+            eventVC.sportName = sportName
             
             navigationController?.pushViewController(eventVC, animated: true)
+        }
+    }
+    
+    func fetchEvents(sportSlug: String){
+        Task{
+            do{
+                try await tableView.data.loadData(sport: sportSlug)
+                tableView.tableView.reloadData()
+                
+            } catch let error as APIError {
+                ErrorHandling.handleAPI(error: error)
+                
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }

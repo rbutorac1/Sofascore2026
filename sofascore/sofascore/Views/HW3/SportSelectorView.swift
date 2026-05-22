@@ -28,6 +28,8 @@ class SportSelectorView: BaseView {
     let amFootball: SportView = SportView()
     
     var indicatorLeadingConstraint: Constraint?
+    var selectedSport: ((String) -> Void)?
+    var selectedSportName: ((String) -> Void)?
     
     override func addViews(){
         addSubview(stackView)
@@ -111,5 +113,8 @@ class SportSelectorView: BaseView {
 extension SportSelectorView: SportViewDelegate {
     func didClickSportView(_ view: SportView) {
         moveIndicator(to: view)
+        
+        selectedSport?(view.slug)
+        selectedSportName?(view.sportName)
     }
 }

@@ -20,15 +20,31 @@ final class APIClient {
             throw APIError.invalidURL
         }
         
+        guard let token = try KeychainManager.shared.getToken() else {
+            throw APIError.invalidResponse
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
         do {
-            let (data, response) = try await URLSession.shared.data(from: url)
+            let (data, response) = try await URLSession.shared.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 throw APIError.invalidResponse
             }
             print(httpResponse.statusCode)
             
-            return try JSONDecoder().decode([Event].self, from: data)
+            let events = try JSONDecoder().decode([Event].self, from: data)
+            
+            let eventsDB = events.map { EventDB(from: $0) }
+            let leagueDB = events.compactMap { $0.league }.map { LeagueDB(from: $0) }
+            
+            try DatabaseManager.shared.saveEvents(eventsDB)
+            try DatabaseManager.shared.saveLeagues(leagueDB)
+            
+            return events
         } catch {
             throw APIError.fetchingFailed
         }

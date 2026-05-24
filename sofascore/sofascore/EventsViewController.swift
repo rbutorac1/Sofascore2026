@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import SofaAcademic
 
-class ViewController: UIViewController {
+class EventsViewController: UIViewController {
     
     enum Measures {
         

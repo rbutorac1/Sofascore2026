@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D23F9F1C2FC355F600CBDEDA /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D23F9F1B2FC355F600CBDEDA /* GRDB */; };
 		D25F58362F6C5AE500E135C1 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = D25F58352F6C5AE500E135C1 /* SDWebImage */; };
 		D27C58212F5B1B1600CBE6B2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D27C58202F5B1B1600CBE6B2 /* SnapKit */; };
 		D28BBEDF2F72A537002875D4 /* SofaAcademic in Frameworks */ = {isa = PBXBuildFile; productRef = D28BBEDE2F72A537002875D4 /* SofaAcademic */; };
+		D2B4E6D52FC1A22E002F0C43 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D2B4E6D42FC1A22E002F0C43 /* KeychainAccess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2B4E6D52FC1A22E002F0C43 /* KeychainAccess in Frameworks */,
+				D23F9F1C2FC355F600CBDEDA /* GRDB in Frameworks */,
 				D25F58362F6C5AE500E135C1 /* SDWebImage in Frameworks */,
 				D28BBEDF2F72A537002875D4 /* SofaAcademic in Frameworks */,
 				D27C58212F5B1B1600CBE6B2 /* SnapKit in Frameworks */,
@@ -90,6 +94,8 @@
 				D27C58202F5B1B1600CBE6B2 /* SnapKit */,
 				D25F58352F6C5AE500E135C1 /* SDWebImage */,
 				D28BBEDE2F72A537002875D4 /* SofaAcademic */,
+				D2B4E6D42FC1A22E002F0C43 /* KeychainAccess */,
+				D23F9F1B2FC355F600CBDEDA /* GRDB */,
 			);
 			productName = sofascore;
 			productReference = D27C58072F5B1AE300CBE6B2 /* sofascore.app */;
@@ -123,6 +129,8 @@
 				D27C581F2F5B1B1600CBE6B2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				D25F58342F6C5AE500E135C1 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				D28BBEDD2F72A537002875D4 /* XCRemoteSwiftPackageReference "academy" */,
+				D2B4E6D32FC1A22E002F0C43 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				D23F9F1A2FC355F600CBDEDA /* XCRemoteSwiftPackageReference "GRDB.swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D27C58082F5B1AE300CBE6B2 /* Products */;
@@ -358,6 +366,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D23F9F1A2FC355F600CBDEDA /* XCRemoteSwiftPackageReference "GRDB.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		D25F58342F6C5AE500E135C1 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
@@ -382,9 +398,22 @@
 				kind = branch;
 			};
 		};
+		D2B4E6D32FC1A22E002F0C43 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D23F9F1B2FC355F600CBDEDA /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D23F9F1A2FC355F600CBDEDA /* XCRemoteSwiftPackageReference "GRDB.swift" */;
+			productName = GRDB;
+		};
 		D25F58352F6C5AE500E135C1 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D25F58342F6C5AE500E135C1 /* XCRemoteSwiftPackageReference "SDWebImage" */;
@@ -399,6 +428,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D28BBEDD2F72A537002875D4 /* XCRemoteSwiftPackageReference "academy" */;
 			productName = SofaAcademic;
+		};
+		D2B4E6D42FC1A22E002F0C43 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D2B4E6D32FC1A22E002F0C43 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

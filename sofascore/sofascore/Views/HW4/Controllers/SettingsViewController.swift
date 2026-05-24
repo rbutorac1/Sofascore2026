@@ -18,6 +18,7 @@ class SettingsViewController: UIViewController {
     
     let header: SettingsHeaderView = SettingsHeaderView()
     let safeAreaView: UIView = UIView()
+    let info: SettingsInfoView = SettingsInfoView()
         
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -41,6 +42,7 @@ class SettingsViewController: UIViewController {
     func addViews(){
         view.addSubview(header)
         view.addSubview(safeAreaView)
+        view.addSubview(info)
     }
     
     func styleViews(){
@@ -59,11 +61,37 @@ class SettingsViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(Measures.headerHeight)
         }
+        
+        info.snp.makeConstraints{ make in
+            make.top.equalTo(header.snp.bottom)
+            make.height.equalToSuperview()
+            make.width.equalToSuperview()
+        }
     }
     
     func setupBindings(){
         header.arrowTap = { [weak self] in
             self?.dismiss(animated: true)
+        }
+        
+        info.logoutTap = { [weak self] in
+            self?.logout()
+        }
+    }
+    
+    @objc private func logout(){
+        do {
+            try DatabaseManager.shared.deleteAllTables()
+            try KeychainManager.shared.deleteToken()
+            UserDefaults.standard.removeObject(forKey: "username")
+            
+            let loginVC = LoginViewController()
+            let navigationController = UINavigationController(rootViewController: loginVC)
+            
+            view.window?.rootViewController = navigationController
+            view.window?.makeKeyAndVisible()
+        } catch {
+            print("Logout error: \(error)")
         }
     }
 }

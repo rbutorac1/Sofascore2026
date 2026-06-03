@@ -27,6 +27,7 @@ class SettingsViewController: UIViewController {
         styleViews()
         setupConstraints()
         setupBindings()
+        getRowCount()
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -92,6 +93,18 @@ class SettingsViewController: UIViewController {
             view.window?.makeKeyAndVisible()
         } catch {
             print("Logout error: \(error)")
+        }
+    }
+    
+    func getRowCount(){
+        do {
+            let events = try DatabaseManager.shared.getEventCount()
+            let leagues = try DatabaseManager.shared.getLeagueCount()
+            
+            info.eventCount.text = "Events: \(events)"
+            info.leagueCount.text = "Leagues: \(leagues)"
+        } catch {
+            print("Count error: \(error)")
         }
     }
 }

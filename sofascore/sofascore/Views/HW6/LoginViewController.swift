@@ -13,13 +13,25 @@ class LoginViewController: UIViewController {
     
     private let loginView: LoginView = LoginView()
     
-    override func loadView(){
-        view = loginView
-    }
-    
     override func viewDidLoad(){
         super.viewDidLoad()
         
+        addViews()
+        setupBindings()
+        setupConstraints()
+    }
+    
+    func addViews(){
+        view.addSubview(loginView)
+    }
+    
+    func setupConstraints(){
+        loginView.snp.makeConstraints{ make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    func setupBindings(){
         loginView.loginTap = { [weak self] username, password in
             self?.login(username: username, password: password)
         }

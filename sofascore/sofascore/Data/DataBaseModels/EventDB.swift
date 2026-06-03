@@ -19,9 +19,7 @@ struct EventDB: Codable, FetchableRecord, PersistableRecord {
     let homeScore: Int?
     let awayScore: Int?
     let round: Int
-}
-
-extension EventDB {
+    
     init(from event: Event) {
         self.id = event.id
         self.homeTeamName = event.homeTeam.name

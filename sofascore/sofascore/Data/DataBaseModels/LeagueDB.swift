@@ -15,9 +15,7 @@ struct LeagueDB: Codable, FetchableRecord, PersistableRecord {
     let country: String?
     let logoUrl: String?
     let seasonId: Int
-}
-
-extension LeagueDB {
+    
     init(from league: League) {
         self.id = league.id
         self.name = league.name

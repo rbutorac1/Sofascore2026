@@ -11,42 +11,10 @@ import SofaAcademic
 
 class SettingsInfoView: BaseView {
     
-    let cell: UIView = UIView()
-    let user: UILabel = UILabel()
-    let eventCount: UILabel = UILabel()
-    let leagueCount: UILabel = UILabel()
-    let logoutButton: UIButton = UIButton()
-    
-    let username = UserDefaults.standard.string(forKey: "username")
-    
-    override func addViews(){
-        addSubview(cell)
-        
-        cell.addSubview(user)
-        cell.addSubview(eventCount)
-        cell.addSubview(leagueCount)
-        cell.addSubview(logoutButton)
-    }
-    
-    var logoutTap: (() -> Void)?
-    
-    override func styleViews() {
-        user.text = "User: \(username ?? "")"
-        
-        getRowCount()
-        
-        logoutButton.backgroundColor = .red
-        logoutButton.setTitle("LOG OUT", for: .normal)
-        logoutButton.setTitleColor(.white, for: .normal)
-        logoutButton.layer.cornerRadius = 12
-        logoutButton.titleLabel?.font = .systemFont(ofSize: 15)
-        logoutButton.addTarget(self, action: #selector(logoutTapped), for: .touchUpInside)
-    }
-    
     enum Measures {
         
-        static let cellTop = 30
-        static let cellHeight = 300
+        static let viewTop = 30
+        static let viewHeight = 300
         
         static let textBoxTop = 10
         static let textBoxHeight = 32
@@ -58,11 +26,40 @@ class SettingsInfoView: BaseView {
         static let buttonTop = 30
     }
     
+    let mainView: UIView = UIView()
+    let user: UILabel = UILabel()
+    let eventCount: UILabel = UILabel()
+    let leagueCount: UILabel = UILabel()
+    let logoutButton: UIButton = UIButton()
+    
+    let username = UserDefaults.standard.string(forKey: "username")
+    var logoutTap: (() -> Void)?
+    
+    override func addViews(){
+        addSubview(mainView)
+        
+        mainView.addSubview(user)
+        mainView.addSubview(eventCount)
+        mainView.addSubview(leagueCount)
+        mainView.addSubview(logoutButton)
+    }
+    
+    override func styleViews() {
+        user.text = "User: \(username ?? "")"
+        
+        logoutButton.backgroundColor = .red
+        logoutButton.setTitle("LOG OUT", for: .normal)
+        logoutButton.setTitleColor(.white, for: .normal)
+        logoutButton.layer.cornerRadius = 12
+        logoutButton.titleLabel?.font = .systemFont(ofSize: 15)
+        logoutButton.addTarget(self, action: #selector(logoutTapped), for: .touchUpInside)
+    }
+    
     override func setupConstraints() {
-        cell.snp.makeConstraints{ make in
-            make.top.equalToSuperview().inset(Measures.cellTop)
+        mainView.snp.makeConstraints{ make in
+            make.top.equalToSuperview().inset(Measures.viewTop)
             make.width.equalToSuperview()
-            make.height.equalTo(Measures.cellHeight)
+            make.height.equalTo(Measures.viewHeight)
         }
         
         user.snp.makeConstraints{ make in
@@ -91,18 +88,6 @@ class SettingsInfoView: BaseView {
             make.height.equalTo(Measures.buttonHeight)
             make.width.equalTo(Measures.buttonWidth)
             make.leading.equalToSuperview().offset(Measures.textBoxLeading)
-        }
-    }
-    
-    func getRowCount(){
-        do {
-            let events = try DatabaseManager.shared.getEventCount()
-            let leagues = try DatabaseManager.shared.getLeagueCount()
-            
-            eventCount.text = "Events: \(events)"
-            leagueCount.text = "Leagues: \(leagues)"
-        } catch {
-            print("Count error: \(error)")
         }
     }
     

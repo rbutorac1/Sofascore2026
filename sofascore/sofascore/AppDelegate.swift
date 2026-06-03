@@ -12,16 +12,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window:UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window = UIWindow(frame: UIScreen.main.bounds)
         
-            let rootView = LoginViewController()
-            let navigation = UINavigationController(rootViewController: rootView)
+        let rootView: UIViewController
         
-            window?.rootViewController = navigation
-            window?.makeKeyAndVisible()
-
-            return true
+        do {
+            let token = try KeychainManager.shared.getToken()
+            if token != nil {
+                rootView = EventsViewController()
+            } else {
+                rootView = LoginViewController()
+            }
+        } catch {
+            print("Token error: ", error)
+            rootView = LoginViewController()
         }
+    
+        let navigation = UINavigationController(rootViewController: rootView)
+        window?.rootViewController = navigation
+        window?.makeKeyAndVisible()
+
+        return true
+    }
 
     // MARK: UISceneSession Lifecycle
 

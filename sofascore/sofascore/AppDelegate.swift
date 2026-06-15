@@ -27,8 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Token error: ", error)
             rootView = LoginViewController()
         }
-    
         let navigation = UINavigationController(rootViewController: rootView)
+
         window?.rootViewController = navigation
         window?.makeKeyAndVisible()
 

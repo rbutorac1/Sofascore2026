@@ -137,4 +137,14 @@ extension Helper {
         
         return "\(matchDay)"
     }
+    
+    static func matchDateShort(startTimestamp: Int) -> String {
+        let date: Date = Date(timeIntervalSince1970: TimeInterval(startTimestamp))
+
+        format.dateFormat = "dd.MM.yy"
+        
+        let matchDay: String = format.string(from: date)
+        
+        return "\(matchDay)"
+    }
 }

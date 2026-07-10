@@ -6,12 +6,12 @@
 //
 
 struct Incident: Codable {
-    let type: String
+    let type: IncidentType
     let minute: Int
-    let isHomeTeam: Bool
-    let extraMinute: Int
-    let player: String
-    let scoreDiff: Int
-    let score: String
-    let description: String
+    let isHomeTeam: Bool?
+    let extraMinute: Int?
+    let player: String?
+    let scoreDiff: Int?
+    let score: String?
+    let description: String?
 }
